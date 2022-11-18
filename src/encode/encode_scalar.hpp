@@ -1,4 +1,6 @@
-#include "streamvbyte.h"
+#pragma once
+
+#include <iostream>
 
 static uint8_t encode_data(uint32_t value, uint8_t** data_stream_ptr) {
     if (value < (1U << 8)) {
@@ -54,20 +56,11 @@ static uint8_t* encode_scalar(const uint32_t* in, uint8_t* control_stream, uint8
             control_bits = 0;
         }
     }
-    
+
     if (shift != 0) {
         *control_stream = control_bits;
         control_stream++;
     }
 
     return control_stream;
-}
-
-std::size_t stringvbyte::encode(const uint32_t* in, std::size_t count, uint8_t* out) {
-    uint8_t* control_stream = out;
-    uint8_t* data_stream = out + (count + 3) / 4;
-
-    control_stream = encode_scalar(in, control_stream, data_stream, count);
-
-    return control_stream - out;
 }
