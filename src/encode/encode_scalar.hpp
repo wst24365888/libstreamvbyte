@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <branch_prediction.h>
 
 static uint8_t encode_data(uint32_t value, uint8_t** data_stream_ptr) {
     if (value < (1U << 8)) {
@@ -38,18 +39,18 @@ static uint8_t encode_data(uint32_t value, uint8_t** data_stream_ptr) {
     }
 }
 
-static uint8_t* encode_scalar(const uint32_t* in, uint8_t* control_stream, uint8_t* data_stream, std::size_t count) {
-    if (count == 0) {
-        return control_stream;
+static void encode_scalar(const uint32_t* in, const std::size_t count, uint8_t* control_stream, uint8_t* data_stream) {
+    if (UNLIKELY(count == 0)) {
+        return;
     }
 
     uint8_t shift = 0;
     uint8_t control_bits = 0;
-    for (std::size_t i = 0; i < count; i++) {
+    for (std::size_t i = 0; LIKELY(i < count); i++) {
         control_bits |= encode_data(in[i], &data_stream) << shift;
         shift += 2;
 
-        if (shift == 8) {
+        if (UNLIKELY(shift == 8)) {
             *control_stream = control_bits;
             control_stream++;
             shift = 0;
@@ -57,10 +58,8 @@ static uint8_t* encode_scalar(const uint32_t* in, uint8_t* control_stream, uint8
         }
     }
 
-    if (shift != 0) {
+    if (LIKELY(shift != 0)) {
         *control_stream = control_bits;
         control_stream++;
     }
-
-    return control_stream;
 }
