@@ -1,5 +1,5 @@
 CXX=g++
-CXXFLAGS=-Wall -g -fPIC -std=c++11 -O3 -mssse3
+CXXFLAGS=-Wall -fPIC -std=c++17 -O3 -mssse3
 LDFLAGS=-shared
 VERSION=0.1.0
 LIBNAME=libstreamvbyte.$(VERSION).so
@@ -12,6 +12,14 @@ OBJECTS=encode.o
 
 all: $(LIBNAME)
 
+test: ./tests/test.cpp $(INCLUDES) $(OBJECTS) $(HPPS)
+	$(CXX) $(CXXFLAGS) -o test ./tests/test.cpp $(OBJECTS) -Iinclude
+	./test
+	rm ./test
+
+clean:
+	rm -f $(OBJECTS) $(LIBNAME) $(LNLIBNAME)
+
 $(LIBNAME): $(OBJECTS)
 	$(CXX) $(LDFLAGS) -o $(LIBNAME) $(OBJECTS)
 
@@ -20,11 +28,3 @@ $(LNLIBNAME): $(LIBNAME)
 
 encode.o: ./src/encode/encode.cpp $(INCLUDES) $(HPPS)
 	$(CXX) $(CXXFLAGS) -c ./src/encode/encode.cpp -o encode.o -Iinclude
-
-test: ./tests/test.cpp $(INCLUDES) $(OBJECTS) $(HPPS)
-	$(CXX) $(CXXFLAGS) -o test ./tests/test.cpp $(OBJECTS) $(HPPS) -Iinclude
-	./test
-	rm ./test
-
-clean:
-	rm -f $(OBJECTS) $(LIBNAME) $(LNLIBNAME)

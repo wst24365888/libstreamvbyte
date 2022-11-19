@@ -5,10 +5,15 @@
 #include "encode_shuffle_table.h"
 #include "length_table.h"
 #include "tmmintrin.h"
+#include <chrono>
+#include <tuple>
 #include <iostream>
 
 static uint8_t* encode_ssse3(const uint32_t* in, std::size_t& count, uint8_t*& control_stream, uint8_t*& data_stream) {
-    for (std::size_t i = 0; LIKELY(i < count / 8); i++) {
+    auto start = std::chrono::high_resolution_clock::now();
+    std::size_t original_count = count;
+
+    for (std::size_t i = 0; LIKELY(i < original_count / 8); i++) {
         __m128i r0 = _mm_loadu_si128(reinterpret_cast<const __m128i*>(in + i * 8 + 0));
         __m128i r1 = _mm_loadu_si128(reinterpret_cast<const __m128i*>(in + i * 8 + 4));
 
@@ -36,6 +41,10 @@ static uint8_t* encode_ssse3(const uint32_t* in, std::size_t& count, uint8_t*& c
 
         count -= 8;
     }
+
+    auto end = std::chrono::high_resolution_clock::now();
+
+    std::cout << "encode_ssse3: " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count() << " ns, processed " << original_count - count << " elements" << std::endl;
 
     return data_stream;
 }
