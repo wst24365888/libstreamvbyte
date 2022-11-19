@@ -1,5 +1,5 @@
-#include <iostream>
 #include <iomanip>
+#include <iostream>
 
 int main() {
     std::cout << "static const uint8_t encode_shffule_talbe[64*16] = {" << std::endl;
@@ -36,7 +36,7 @@ int main() {
                 for (std::size_t i = 0; i < 12 - first_block_length - second_block_length - third_block_length; i++) {
                     std::cout << "0xFF, ";
                 }
-                
+
                 std::cout << "// " << first_block_length << second_block_length << third_block_length << "1~" << first_block_length << second_block_length << third_block_length << "4" << std::endl;
             }
         }

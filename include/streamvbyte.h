@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-namespace stringvbyte {
+namespace streamvbyte {
 /*
     Encodes a sequence of 32-bit unsigned integers to a byte array.
 
