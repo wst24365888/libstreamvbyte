@@ -5,7 +5,7 @@
 #include <iostream>
 #include <chrono>
 
-static uint8_t encode_data(uint32_t value, uint8_t** data_stream_ptr) {
+static inline uint8_t encode_data(uint32_t value, uint8_t** data_stream_ptr) {
     uint8_t control_bits = (value >= (1U << 8)) + (value >= (1U << 16)) + (value >= (1U << 24));
     *(reinterpret_cast<uint32_t*>(*data_stream_ptr)) = value;
     *data_stream_ptr += 1 + control_bits;
@@ -38,7 +38,6 @@ static uint8_t* encode_scalar(const uint32_t* in, std::size_t& count, uint8_t* c
     }
 
     auto end = std::chrono::high_resolution_clock::now();
-
     std::cout << "encode_scalar: " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count() << " ns, processed " << original_count - count << " elements" << std::endl;
 
     return data_stream;

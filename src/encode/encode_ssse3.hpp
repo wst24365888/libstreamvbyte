@@ -43,7 +43,6 @@ static uint8_t* encode_ssse3(const uint32_t* in, std::size_t& count, uint8_t*& c
     }
 
     auto end = std::chrono::high_resolution_clock::now();
-
     std::cout << "encode_ssse3: " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count() << " ns, processed " << original_count - count << " elements" << std::endl;
 
     return data_stream;
