@@ -2,7 +2,7 @@
 #include <assert.h>
 
 int main() {
-    std::size_t N = 1 << 30;
+    std::size_t N = 1 << 20;
 
     uint32_t* before_encode = (uint32_t*)malloc(N * sizeof(uint32_t));
     for (std::size_t i = 0; i < N; i++) {
