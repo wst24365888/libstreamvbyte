@@ -6,23 +6,27 @@
 #include "length_table.h"
 #include "tmmintrin.h"
 #include <chrono>
-#include <tuple>
 #include <iostream>
+#include <tuple>
 
 static uint8_t* encode_ssse3(const uint32_t* in, std::size_t& count, uint8_t*& control_stream, uint8_t*& data_stream) {
     auto start = std::chrono::high_resolution_clock::now();
     std::size_t original_count = count;
 
+    const __m128i mask_test_byte = _mm_set1_epi8(0x11);
+    const __m128i mask_clear_low_bits = _mm_set1_epi16(0x0100);
+    const __m128i mask_mscb = _mm_set1_epi16(0x7f00); // most significant control bit
+
     for (std::size_t i = 0; LIKELY(i < original_count / 8); i++) {
         __m128i r0 = _mm_loadu_si128(reinterpret_cast<const __m128i*>(in + i * 8 + 0));
         __m128i r1 = _mm_loadu_si128(reinterpret_cast<const __m128i*>(in + i * 8 + 4));
 
-        __m128i r2 = _mm_and_si128(r0, _mm_set1_epi8(0x11));
-        __m128i r3 = _mm_and_si128(r1, _mm_set1_epi8(0x11));
+        __m128i r2 = _mm_min_epu8(r0, mask_test_byte);
+        __m128i r3 = _mm_min_epu8(r1, mask_test_byte);
 
         r2 = _mm_packus_epi16(r2, r3);
-        r2 = _mm_min_epi16(r2, _mm_set1_epi16(0x0100));
-        r2 = _mm_adds_epu16(r2, _mm_set1_epi16(0x7f00));
+        r2 = _mm_min_epi16(r2, mask_clear_low_bits);
+        r2 = _mm_adds_epu16(r2, mask_mscb); // 7F00 -> 00 (only when uint32_t value is 0), 7F01 -> 00, 7FFF -> 01, 8000 -> 10, FFFF -> 11
 
         std::size_t control_bits = _mm_movemask_epi8(r2);
 

@@ -35,12 +35,12 @@ static const uint8_t* decode_scalar(uint32_t* out, std::size_t& count, const uin
 
     uint8_t shift = 0;
     uint32_t control_bits = *control_stream;
-    for (std::size_t i = 0; i < original_count; i++) {
+    for (std::size_t i = 0; LIKELY(i < original_count); i++) {
         uint32_t val = decode_data((control_bits >> shift) & 0b11, &data_stream);
         *out++ = val;
         shift += 2;
 
-        if (shift == 8) {
+        if (UNLIKELY(shift == 8)) {
             shift = 0;
             control_bits = *control_stream++;
         }
