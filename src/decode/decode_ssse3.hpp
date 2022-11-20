@@ -17,10 +17,10 @@ static inline __m128i decode_data(uint32_t control_bits, const uint8_t** data_st
 
     *data_stream_ptr += length_table[control_bits];
 
-    return data; 
+    return data;
 }
 
-static const uint8_t* decode_ssse3(uint32_t* out, std::size_t& count, const uint8_t* control_stream, const uint8_t* data_stream) {    
+static const uint8_t* decode_ssse3(uint32_t* out, std::size_t& count, const uint8_t* control_stream, const uint8_t* data_stream) {
     auto start = std::chrono::high_resolution_clock::now();
     std::size_t original_count = count;
 

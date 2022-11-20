@@ -8,22 +8,22 @@
 static inline uint32_t decode_data(uint8_t control_bits, const uint8_t** data_stream_ptr) {
     uint32_t value = 0;
     switch (control_bits) {
-        case 0:
-            value = **data_stream_ptr;
-            *data_stream_ptr += 1;
-            break;
-        case 1:
-            value = *(reinterpret_cast<const uint16_t*>(*data_stream_ptr));
-            *data_stream_ptr += 2;
-            break;
-        case 2:
-            value = *(reinterpret_cast<const uint32_t*>(*data_stream_ptr)) & 0x00FFFFFF;
-            *data_stream_ptr += 3;
-            break;
-        case 3:
-            value = *(reinterpret_cast<const uint32_t*>(*data_stream_ptr));
-            *data_stream_ptr += 4;
-            break;
+    case 0:
+        value = **data_stream_ptr;
+        *data_stream_ptr += 1;
+        break;
+    case 1:
+        value = *(reinterpret_cast<const uint16_t*>(*data_stream_ptr));
+        *data_stream_ptr += 2;
+        break;
+    case 2:
+        value = *(reinterpret_cast<const uint32_t*>(*data_stream_ptr)) & 0x00FFFFFF;
+        *data_stream_ptr += 3;
+        break;
+    case 3:
+        value = *(reinterpret_cast<const uint32_t*>(*data_stream_ptr));
+        *data_stream_ptr += 4;
+        break;
     }
 
     return value;

@@ -21,7 +21,7 @@ int main() {
     //     std::cout << (int)compressed[i] << " ";
     // }
     // std::cout << std::endl;
-    
+
     uint32_t* after_decode = (uint32_t*)malloc(N * sizeof(uint32_t));
 
     std::size_t bytes_decoded = streamvbyte::decode(compressed, after_decode, N);
