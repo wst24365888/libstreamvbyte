@@ -2,7 +2,7 @@
 #include <iostream>
 
 int main() {
-    std::cout << "static const uint8_t encode_shffule_talbe[64*16] = {" << std::endl;
+    std::cout << "static const uint8_t encode_shffule_table[64*16] = {" << std::endl;
 
     for (std::size_t third_block_length = 1; third_block_length <= 4; third_block_length++) {
         for (std::size_t second_block_length = 1; second_block_length <= 4; second_block_length++) {

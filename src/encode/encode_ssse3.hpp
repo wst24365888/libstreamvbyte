@@ -30,8 +30,8 @@ static uint8_t* encode_ssse3(const uint32_t* in, std::size_t& count, uint8_t*& c
 
         std::size_t control_bits = _mm_movemask_epi8(r2);
 
-        r2 = _mm_loadu_si128(reinterpret_cast<const __m128i*>(&encode_shffule_talbe[(control_bits << 4) & 0x03F0]));
-        r3 = _mm_loadu_si128(reinterpret_cast<const __m128i*>(&encode_shffule_talbe[(control_bits >> 4) & 0x03F0]));
+        r2 = _mm_loadu_si128(reinterpret_cast<const __m128i*>(&encode_shffule_table[(control_bits << 4) & 0x03F0]));
+        r3 = _mm_loadu_si128(reinterpret_cast<const __m128i*>(&encode_shffule_table[(control_bits >> 4) & 0x03F0]));
         r0 = _mm_shuffle_epi8(r0, r2);
         r1 = _mm_shuffle_epi8(r1, r3);
 

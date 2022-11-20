@@ -2,7 +2,7 @@
 #include <iostream>
 
 int main() {
-    std::cout << "static const uint8_t decode_shffule_talbe[256*16] = {" << std::endl;
+    std::cout << "static const uint8_t decode_shffule_table[256*16] = {" << std::endl;
 
     for (std::size_t fourth_block_length = 0b00; fourth_block_length <= 0b11; fourth_block_length++) {
         for (std::size_t third_block_length = 0b00; third_block_length <= 0b11; third_block_length++) {

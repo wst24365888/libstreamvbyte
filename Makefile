@@ -7,8 +7,8 @@ LNLIBNAME=libstreamvbyte.so
 OBJECTS=encode.o decode.o
 ENCODE_INCLUDES=./include/streamvbyte.h ./include/branch_prediction.h ./include/length_table.h ./include/encode_shuffle_table.h
 ENCODE_HPPS=./src/encode/encode_scalar.hpp ./src/encode/encode_ssse3.hpp
-DECODE_INCLUDES=./include/streamvbyte.h ./include/branch_prediction.h ./include/length_table.h
-DECODE_HPPS=./src/decode/decode_scalar.hpp
+DECODE_INCLUDES=./include/streamvbyte.h ./include/branch_prediction.h ./include/length_table.h ./include/decode_shuffle_table.h
+DECODE_HPPS=./src/decode/decode_scalar.hpp ./src/decode/decode_ssse3.hpp
 
 .PHONY: all test clean
 
