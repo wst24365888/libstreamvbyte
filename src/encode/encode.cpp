@@ -10,10 +10,10 @@ std::size_t streamvbyte::encode(const uint32_t* in, std::size_t count, uint8_t* 
     uint8_t* data_stream = out + (count + 3) / 4;
 
 #if defined(__SSSE3__)
-    data_stream = encode_ssse3(in, count, control_stream, data_stream);
+    encode_ssse3(in, count, control_stream, data_stream); // side effect: all arguments are modified
 #endif
 
-    data_stream = encode_scalar(in, count, control_stream, data_stream);
+    encode_scalar(in, count, control_stream, data_stream); // side effect: all arguments are modified
 
     return data_stream - out;
 }

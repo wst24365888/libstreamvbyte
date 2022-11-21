@@ -20,7 +20,7 @@ static inline __m128i decode_data(uint32_t control_bits, const uint8_t** data_st
     return data;
 }
 
-static const uint8_t* decode_ssse3(uint32_t* out, std::size_t& count, const uint8_t* control_stream, const uint8_t* data_stream) {
+static void decode_ssse3(uint32_t*& out, std::size_t& count, const uint8_t*& control_stream, const uint8_t*& data_stream) {
     auto start = std::chrono::high_resolution_clock::now();
     std::size_t original_count = count;
 
@@ -39,8 +39,6 @@ static const uint8_t* decode_ssse3(uint32_t* out, std::size_t& count, const uint
 
     auto end = std::chrono::high_resolution_clock::now();
     std::cout << "decode_scalar: " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count() << " ns, processed " << original_count - count << " elements" << std::endl;
-
-    return data_stream;
 }
 
 #endif

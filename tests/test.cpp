@@ -6,7 +6,7 @@ int main() {
 
     uint32_t* before_encode = static_cast<uint32_t*>(malloc(N * sizeof(uint32_t)));
     for (std::size_t i = 0; i < N; i++) {
-        before_encode[i] = (rand() % 8);
+        before_encode[i] = N - i;
     }
     // for (std::size_t i = 0; i < 10; i++) {
     //     std::cout << (int)before_encode[i] << " ";
