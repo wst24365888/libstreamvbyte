@@ -38,7 +38,7 @@ static void decode_ssse3(uint32_t*& out, std::size_t& count, const uint8_t*& con
     }
 
     auto end = std::chrono::high_resolution_clock::now();
-    std::cout << "decode_scalar: " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count() << " ns, processed " << original_count - count << " elements" << std::endl;
+    std::cout << "decode_ssse3: " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count() << " ns, processed " << original_count - count << " elements" << std::endl;
 }
 
 #endif
