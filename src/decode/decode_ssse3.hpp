@@ -31,9 +31,10 @@ static void decode_ssse3(uint32_t*& out, std::size_t& count, const uint8_t*& con
         __m128i r0 = decode_data(control_bits & 0xFF, &data_stream);
         __m128i r1 = decode_data(control_bits >> 8, &data_stream);
 
-        _mm_storeu_si128(reinterpret_cast<__m128i*>(out + i * 8 + 0), r0);
-        _mm_storeu_si128(reinterpret_cast<__m128i*>(out + i * 8 + 4), r1);
+        _mm_storeu_si128(reinterpret_cast<__m128i*>(out + 0), r0);
+        _mm_storeu_si128(reinterpret_cast<__m128i*>(out + 4), r1);
 
+        out += 8;
         count -= 8;
     }
 

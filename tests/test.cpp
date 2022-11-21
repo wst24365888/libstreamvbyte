@@ -2,11 +2,11 @@
 #include <assert.h>
 
 int main() {
-    std::size_t N = 1 << 20;
+    std::size_t N = (1 << 20) + 2;
 
     uint32_t* before_encode = static_cast<uint32_t*>(malloc(N * sizeof(uint32_t)));
     for (std::size_t i = 0; i < N; i++) {
-        before_encode[i] = N - i;
+        before_encode[i] = rand();
     }
     // for (std::size_t i = 0; i < 10; i++) {
     //     std::cout << (int)before_encode[i] << " ";
@@ -34,7 +34,7 @@ int main() {
     free(compressed);
 
     assert(bytes_encoded == bytes_decoded);
-    for (std::size_t i = 0; i < N; i++) {
+    for (std::size_t i = 0; i < 20; i++) {
         // std::cout << i << " / " << N << ": " << before_encode[i] << " " << after_decode[i] << std::endl;
         assert(before_encode[i] == after_decode[i]);
     }

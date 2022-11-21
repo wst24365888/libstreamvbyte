@@ -18,8 +18,8 @@ static void encode_ssse3(const uint32_t*& in, std::size_t& count, uint8_t*& cont
     const __m128i mask_mscb = _mm_set1_epi16(0x7f00); // most significant control bit
 
     for (std::size_t i = 0; LIKELY(i < original_count / 8); i++) {
-        __m128i r0 = _mm_loadu_si128(reinterpret_cast<const __m128i*>(in + i * 8 + 0));
-        __m128i r1 = _mm_loadu_si128(reinterpret_cast<const __m128i*>(in + i * 8 + 4));
+        __m128i r0 = _mm_loadu_si128(reinterpret_cast<const __m128i*>(in + 0));
+        __m128i r1 = _mm_loadu_si128(reinterpret_cast<const __m128i*>(in + 4));
 
         __m128i r2 = _mm_min_epu8(r0, mask_test_byte);
         __m128i r3 = _mm_min_epu8(r1, mask_test_byte);
@@ -43,6 +43,7 @@ static void encode_ssse3(const uint32_t*& in, std::size_t& count, uint8_t*& cont
         *(reinterpret_cast<uint16_t*>(control_stream)) = static_cast<uint16_t>(control_bits);
         control_stream += 2;
 
+        in += 8;
         count -= 8;
     }
 
