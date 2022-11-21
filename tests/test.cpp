@@ -4,7 +4,7 @@
 int main() {
     std::size_t N = 1 << 20;
 
-    uint32_t* before_encode = (uint32_t*)malloc(N * sizeof(uint32_t));
+    uint32_t* before_encode = static_cast<uint32_t*>(malloc(N * sizeof(uint32_t)));
     for (std::size_t i = 0; i < N; i++) {
         before_encode[i] = (rand() % 8);
     }
@@ -13,7 +13,7 @@ int main() {
     // }
     // std::cout << std::endl;
 
-    uint8_t* compressed = (uint8_t*)malloc(N * 4 * sizeof(uint32_t));
+    uint8_t* compressed = static_cast<uint8_t*>(malloc(N * 4 * sizeof(uint32_t)));
 
     std::size_t bytes_encoded = streamvbyte::encode(before_encode, N, compressed);
     std::cout << "Encoded " << bytes_encoded << " bytes" << std::endl;
@@ -22,7 +22,7 @@ int main() {
     // }
     // std::cout << std::endl;
 
-    uint32_t* after_decode = (uint32_t*)malloc(N * sizeof(uint32_t));
+    uint32_t* after_decode = static_cast<uint32_t*>(malloc(N * sizeof(uint32_t)));
 
     std::size_t bytes_decoded = streamvbyte::decode(compressed, after_decode, N);
     std::cout << "Decoded " << bytes_decoded << " bytes" << std::endl;
