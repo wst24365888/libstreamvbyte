@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <vector>
 
 namespace streamvbyte {
 /*
@@ -13,6 +14,7 @@ namespace streamvbyte {
     @return the number of bytes written to out
 */
 std::size_t encode(const uint32_t* in, std::size_t count, uint8_t* out);
+std::vector<uint8_t> encode(const std::vector<uint32_t>& in);
 
 /*
     Decodes a sequence of 32-bit unsigned integers from a byte array.
@@ -24,4 +26,5 @@ std::size_t encode(const uint32_t* in, std::size_t count, uint8_t* out);
     @return the number of bytes written to in
 */
 std::size_t decode(const uint8_t* in, uint32_t* out, std::size_t count);
+std::vector<uint32_t> decode(const std::vector<uint8_t>& in, std::size_t size);
 }

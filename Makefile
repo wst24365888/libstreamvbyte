@@ -1,20 +1,23 @@
 CXX=g++
-CXXFLAGS=-Wall -fPIC -std=c++17 -O3 -mssse3
+CXXFLAGS=-Wall -fPIC -shared -std=c++17 -O3 -mssse3
 LDFLAGS=-shared
 VERSION=0.1.0
-LIBNAME=libstreamvbyte.$(VERSION).so
-LNLIBNAME=libstreamvbyte.so
 OBJECTS=encode.o decode.o
-ENCODE_INCLUDES=./include/streamvbyte.h ./src/branch_prediction.h ./src/length_table.h ./src/encode_shuffle_table.h
-ENCODE_HPPS=./src/encode/encode_scalar.hpp ./src/encode/encode_ssse3.hpp
-DECODE_INCLUDES=./include/streamvbyte.h ./src/branch_prediction.h ./src/length_table.h ./src/decode_shuffle_table.h
-DECODE_HPPS=./src/decode/decode_scalar.hpp ./src/decode/decode_ssse3.hpp
+PUBLIC_HEADERS=./include/streamvbyte.h
+PRIVATE_ENCODE_HEADERS=./src/branch_prediction.h ./src/length_table.h ./src/encode_shuffle_table.h
+PRIVATE_ENCODE_HPPS=./src/encode/encode_scalar.hpp ./src/encode/encode_ssse3.hpp
+PRIVATE_DECODE_HEADERS=./src/branch_prediction.h ./src/length_table.h ./src/decode_shuffle_table.h
+PRIVATE_DECODE_HPPS=./src/decode/decode_scalar.hpp ./src/decode/decode_ssse3.hpp
+PYBIND_INCLUDE = $(shell python3 -m pybind11 --includes)
+PYTHON_CONFIG = $(shell python3-config --includes)
+LIBNAME = streamvbyte$(shell python3-config --extension-suffix)
+ENTRYPOINT = ./src/streamvbyte.cpp
 
 .PHONY: all test clean
 
 all: $(LIBNAME)
 
-test: ./tests/test.cpp $(ENCODE_INCLUDES) $(OBJECTS) $(ENCODE_HPPS)
+test: ./tests/test.cpp $(PRIVATE_ENCODE_HEADERS) $(OBJECTS) $(PUBLIC_HEADERS) $(PRIVATE_ENCODE_HPPS)
 	$(CXX) $(CXXFLAGS) -o test ./tests/test.cpp $(OBJECTS) -Iinclude
 	./test
 	rm ./test
@@ -22,14 +25,11 @@ test: ./tests/test.cpp $(ENCODE_INCLUDES) $(OBJECTS) $(ENCODE_HPPS)
 clean:
 	rm -f $(OBJECTS) $(LIBNAME) $(LNLIBNAME)
 
-$(LIBNAME): $(OBJECTS)
-	$(CXX) $(LDFLAGS) -o $(LIBNAME) $(OBJECTS)
+$(LIBNAME): $(OBJECTS) $(PUBLIC_HEADERS) $(PRIVATE_ENCODE_HEADERS) $(PRIVATE_ENCODE_HPPS) $(PRIVATE_DECODE_HEADERS) $(PRIVATE_DECODE_HPPS) $(ENTRYPOINT)
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $(LIBNAME) $(ENTRYPOINT) $(OBJECTS) $(PYBIND_INCLUDE) $(PYTHON_CONFIG) -Iinclude
 
-$(LNLIBNAME): $(LIBNAME)
-	ln -sf $(LIBNAME) $(LNLIBNAME)
-
-encode.o: ./src/encode/encode.cpp $(ENCODE_INCLUDES) $(ENCODE_HPPS)
+encode.o: ./src/encode/encode.cpp $(PRIVATE_ENCODE_HEADERS) $(PUBLIC_HEADERS) $(PRIVATE_ENCODE_HPPS)
 	$(CXX) $(CXXFLAGS) -c ./src/encode/encode.cpp -o encode.o -Iinclude -Isrc
 
-decode.o: ./src/decode/decode.cpp $(DECODE_INCLUDES) $(DECODE_HPPS)
+decode.o: ./src/decode/decode.cpp $(PRIVATE_DECODE_HEADERS) $(PUBLIC_HEADERS) $(PRIVATE_DECODE_HPPS)
 	$(CXX) $(CXXFLAGS) -c ./src/decode/decode.cpp -o decode.o -Iinclude -Isrc

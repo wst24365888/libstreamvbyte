@@ -18,3 +18,10 @@ std::size_t streamvbyte::decode(const uint8_t* in, uint32_t* out, std::size_t co
 
     return data_stream - in;
 }
+
+std::vector<uint32_t> streamvbyte::decode(const std::vector<uint8_t>& in, std::size_t size) {
+    std::vector<uint32_t> out(in.size());
+    decode(in.data(), out.data(), out.size());
+    out.resize(size);
+    return out;
+}
