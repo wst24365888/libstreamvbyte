@@ -49,3 +49,5 @@ _deps
 test
 *.pyd
 __pycache__/
+build/
+dist/
