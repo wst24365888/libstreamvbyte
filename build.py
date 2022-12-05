@@ -36,7 +36,7 @@ class CMakeBuild(build_ext):
         cfg = "Debug" if debug else "Release"
 
         cmake_args = [
-            f"-DCMAKE_LIBRARY_OUTPUT_DIRECTORY={cwd}{os.sep}",
+            f"-DCMAKE_LIBRARY_OUTPUT_DIRECTORY={cwd}{os.sep}{ext.name}",
             f"-DPYTHON_EXECUTABLE={sys.executable}",
             f"-DCMAKE_BUILD_TYPE={cfg}",
         ]
@@ -44,7 +44,7 @@ class CMakeBuild(build_ext):
 
         # if self.compiler.compiler_type == "msvc":
         #     cmake_args += ["-A", PLAT_TO_CMAKE[self.plat_name],
-        #                    f"-DCMAKE_LIBRARY_OUTPUT_DIRECTORY_{cfg.upper()}={cwd}{os.sep}", ]
+        #                    f"-DCMAKE_LIBRARY_OUTPUT_DIRECTORY_{cfg.upper()}={cwd}{os.sep}{ext.name}", ]
         #     build_args += ["--config", cfg]
         print("compiler:", self.compiler)
         print("shlib_compiler:", self.shlib_compiler)
