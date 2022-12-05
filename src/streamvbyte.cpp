@@ -19,7 +19,8 @@ PYBIND11_MODULE(streamvbyte, m) {
             auto out = py::array_t<uint8_t>(streamvbyte::max_compressed_size(in_buf.size));
             py::buffer_info out_buf = out.request();
 
-            streamvbyte::encode(reinterpret_cast<uint32_t*>(in_buf.ptr), in_buf.size, reinterpret_cast<uint8_t*>(out_buf.ptr));
+            std::size_t compressed_size = streamvbyte::encode(reinterpret_cast<uint32_t*>(in_buf.ptr), in_buf.size, reinterpret_cast<uint8_t*>(out_buf.ptr));
+            out.resize({compressed_size});
 
             return out;
         },
