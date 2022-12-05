@@ -31,7 +31,6 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          poetry install --no-root
           poetry build
 
       - name: Build SDist
@@ -60,9 +59,6 @@ jobs:
       - name: Switch to Current Branch
         run: git checkout ${{ env.BRANCH }}
 
-      - run: |
-          sudo apt-get update
-          sudo apt-get install -y graphviz
       - name: Setup Python 3.10.4
         uses: actions/setup-python@v3
         with:
@@ -75,7 +71,6 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          poetry install --no-root
           poetry build
 
       - uses: pypa/cibuildwheel@v2.11.2
