@@ -4,9 +4,17 @@ project(streamvbyte VERSION 0.1.0)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED true)
 
-if(CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64")
+# for windows
+if(CMAKE_SYSTEM_PROCESSOR MATCHES "AMD64")
+    set(ARCH_EXTENSION "-mssse3")
+elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "ARM64")
+    set(ARCH_EXTENSION "-mssse3")
+# for others
+elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64")
     set(ARCH_EXTENSION "-mssse3")
 elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "arm64")
+    set(ARCH_EXTENSION "-mfpu=neon")
+elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64")
     set(ARCH_EXTENSION "-mfpu=neon")
 endif()
 
