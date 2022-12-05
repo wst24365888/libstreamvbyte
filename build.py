@@ -5,6 +5,16 @@ import sys
 from setuptools import setup
 from setuptools import Extension
 from setuptools.command.build_ext import build_ext
+import re
+import subprocess
+import setuptools
+
+PLAT_TO_CMAKE = {
+    "win32": "Win32",
+    "win-amd64": "x64",
+    "win-arm32": "ARM",
+    "win-arm64": "ARM64",
+}
 
 
 class CMakeExtension(Extension):
@@ -21,17 +31,43 @@ class CMakeBuild(build_ext):
     def build_extension(self, ext: CMakeExtension):
         cwd = pathlib.Path().absolute()
 
+        debug = int(os.environ.get("DEBUG", 0)
+                    ) if self.debug is None else self.debug
+        cfg = "Debug" if debug else "Release"
+
         cmake_args = [
-            f"-DCMAKE_LIBRARY_OUTPUT_DIRECTORY_{'DEBUG' if self.debug else  'RELEASE'}={cwd}/dist",
-            f"-DCMAKE_BUILD_TYPE={'Debug' if self.debug else 'Release'}",
+            f"-DCMAKE_LIBRARY_OUTPUT_DIRECTORY={cwd}{os.sep}",
             f"-DPYTHON_EXECUTABLE={sys.executable}",
+            f"-DCMAKE_BUILD_TYPE={cfg}",
         ]
+        build_args = []
 
-        pathlib.Path(self.build_temp).mkdir(parents=True, exist_ok=True)
+        # if self.compiler.compiler_type == "msvc":
+        #     cmake_args += ["-A", PLAT_TO_CMAKE[self.plat_name],
+        #                    f"-DCMAKE_LIBRARY_OUTPUT_DIRECTORY_{cfg.upper()}={cwd}{os.sep}", ]
+        #     build_args += ["--config", cfg]
+        print("compiler:", self.compiler)
+        print("shlib_compiler:", self.shlib_compiler)
 
-        self.spawn(["cmake", ext.sourcedir] + cmake_args)
-        self.spawn(["cmake", "--build", ".", "--config",
-                   'Debug' if self.debug else 'Release'])
+        if sys.platform.startswith("darwin"):
+            archs = re.findall(r"-arch (\S+)", os.environ.get("ARCHFLAGS", ""))
+            if archs:
+                cmake_args += [
+                    "-DCMAKE_OSX_ARCHITECTURES={}".format(";".join(archs))]
+
+        build_temp = pathlib.Path(self.build_temp)
+        build_temp.mkdir(parents=True, exist_ok=True)
+
+        subprocess.run(
+            ["cmake", ext.sourcedir] + cmake_args,
+            cwd=build_temp,
+            check=True,
+        )
+        subprocess.run(
+            ["cmake", "--build", "."] + build_args,
+            cwd=build_temp,
+            check=True,
+        )
 
 
 def build(setup_kwargs: Dict[str, Any]):
