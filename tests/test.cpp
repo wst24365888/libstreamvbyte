@@ -8,7 +8,7 @@ int main() {
     for (std::size_t i = 0; i < N; i++) {
         before_encode[i] = rand();
     }
-    // for (std::size_t i = 0; i < 10; i++) {
+    // for (std::size_t i = 0; i < N; i++) {
     //     std::cout << (int)before_encode[i] << " ";
     // }
     // std::cout << std::endl;
@@ -17,7 +17,7 @@ int main() {
 
     std::size_t bytes_encoded = streamvbyte::encode(before_encode, N, compressed);
     std::cout << "Encoded " << bytes_encoded << " bytes" << std::endl;
-    // for (std::size_t i = 0; i < 10; i++) {
+    // for (std::size_t i = 0; i < bytes_encoded; i++) {
     //     std::cout << (int)compressed[i] << " ";
     // }
     // std::cout << std::endl;
@@ -26,7 +26,7 @@ int main() {
 
     std::size_t bytes_decoded = streamvbyte::decode(compressed, after_decode, N);
     std::cout << "Decoded " << bytes_decoded << " bytes" << std::endl;
-    // for (std::size_t i = 0; i < 10; i++) {
+    // for (std::size_t i = 0; i < N; i++) {
     //     std::cout << (int)after_decode[i] << " ";
     // }
     // std::cout << std::endl;
@@ -34,7 +34,7 @@ int main() {
     free(compressed);
 
     assert(bytes_encoded == bytes_decoded);
-    for (std::size_t i = 0; i < 20; i++) {
+    for (std::size_t i = 0; i < N; i++) {
         // std::cout << i << " / " << N << ": " << before_encode[i] << " " << after_decode[i] << std::endl;
         assert(before_encode[i] == after_decode[i]);
     }

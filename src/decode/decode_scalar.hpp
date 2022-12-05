@@ -43,7 +43,8 @@ static void decode_scalar(uint32_t*& out, std::size_t& count, const uint8_t*& co
 
         if (UNLIKELY(shift == 8)) {
             shift = 0;
-            control_bits = *control_stream++;
+            ++control_stream;
+            control_bits = *control_stream;
         }
 
         count--;
