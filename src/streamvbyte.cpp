@@ -1,4 +1,5 @@
 #include "streamvbyte.h"
+#include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
@@ -7,6 +8,37 @@ namespace py = pybind11;
 PYBIND11_MODULE(streamvbyte, m) {
     m.doc() = "C++ StreamVByte Plugin";
 
-    m.def("encode", py::overload_cast<const std::vector<uint32_t>&>(&streamvbyte::encode), "Encode a list of integers into a byte array.");
-    m.def("decode", py::overload_cast<const std::vector<uint8_t>&, std::size_t>(&streamvbyte::decode), "Decode a byte array into a list of integers.");
+    m.def(
+        "encode", [](py::array_t<uint32_t> in) {
+            py::buffer_info in_buf = in.request();
+
+            if (in_buf.ndim != 1) {
+                throw std::runtime_error("Number of dimensions must be one.");
+            }
+
+            auto out = py::array_t<uint8_t>(streamvbyte::max_compressed_size(in_buf.size));
+            py::buffer_info out_buf = out.request();
+
+            streamvbyte::encode(reinterpret_cast<uint32_t*>(in_buf.ptr), in_buf.size, reinterpret_cast<uint8_t*>(out_buf.ptr));
+
+            return out;
+        },
+        "Encode a list of integers into a byte array.");
+
+    m.def(
+        "decode", [](py::array_t<uint8_t> in, std::size_t size) {
+            py::buffer_info in_buf = in.request();
+
+            if (in_buf.ndim != 1) {
+                throw std::runtime_error("Number of dimensions must be one.");
+            }
+
+            auto out = py::array_t<uint32_t>(size);
+            py::buffer_info out_buf = out.request();
+
+            streamvbyte::decode(reinterpret_cast<uint8_t*>(in_buf.ptr), reinterpret_cast<uint32_t*>(out_buf.ptr), out_buf.size);
+
+            return out;
+        },
+        "Decode a byte array into a list of integers.");
 }

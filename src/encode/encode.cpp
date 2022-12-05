@@ -20,7 +20,7 @@ std::size_t streamvbyte::encode(const uint32_t* in, std::size_t count, uint8_t* 
 }
 
 std::vector<uint8_t> streamvbyte::encode(const std::vector<uint32_t>& in) {
-    std::vector<uint8_t> out((in.size() + 3) / 4 + in.size() * sizeof(uint32_t));
+    std::vector<uint8_t> out(max_compressed_size(in.size()));
     std::size_t size = encode(in.data(), in.size(), out.data());
     out.resize(size);
     return out;
