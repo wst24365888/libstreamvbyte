@@ -13,7 +13,7 @@ int main() {
     // }
     // std::cout << std::endl;
 
-    uint8_t* compressed = static_cast<uint8_t*>(malloc(N * 4 * sizeof(uint32_t)));
+    uint8_t* compressed = static_cast<uint8_t*>(malloc(streamvbyte::max_compressed_size(N)));
 
     std::size_t bytes_encoded = streamvbyte::encode(before_encode, N, compressed);
     std::cout << "Encoded " << bytes_encoded << " bytes" << std::endl;

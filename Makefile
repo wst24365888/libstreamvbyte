@@ -1,5 +1,6 @@
+ARCH=ssse3
 CXX=g++
-CXXFLAGS=-Wall -fPIC -shared -std=c++17 -O3 -mssse3
+CXXFLAGS=-Wall -fPIC -shared -std=c++17 -O3 -m$(ARCH)
 LDFLAGS=-shared
 VERSION=0.1.0
 OBJECTS=encode.o decode.o
@@ -17,8 +18,8 @@ ENTRYPOINT = ./src/streamvbyte.cpp
 
 all: $(LIBNAME)
 
-test: ./tests/test.cpp $(PRIVATE_ENCODE_HEADERS) $(OBJECTS) $(PUBLIC_HEADERS) $(PRIVATE_ENCODE_HPPS)
-	$(CXX) $(CXXFLAGS) -o test ./tests/test.cpp $(OBJECTS) -Iinclude
+test: ./tests/test.cpp $(OBJECTS)
+	$(CXX) -Wall -std=c++17 -O3 -m$(ARCH) -g -o test ./tests/test.cpp $(OBJECTS) -Iinclude
 	./test
 	rm ./test
 
