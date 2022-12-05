@@ -1,4 +1,4 @@
-import streamvbyte as svb
+import libstreamvbyte as svb
 import numpy as np
 
 N = 2**20 + 2

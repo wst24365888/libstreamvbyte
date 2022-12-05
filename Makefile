@@ -117,17 +117,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named streamvbyte
+# Target rules for targets named libstreamvbyte
 
 # Build rule for target.
-streamvbyte: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 streamvbyte
-.PHONY : streamvbyte
+libstreamvbyte: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 libstreamvbyte
+.PHONY : libstreamvbyte
 
 # fast build rule for target.
-streamvbyte/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamvbyte.dir/build.make CMakeFiles/streamvbyte.dir/build
-.PHONY : streamvbyte/fast
+libstreamvbyte/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/libstreamvbyte.dir/build.make CMakeFiles/libstreamvbyte.dir/build
+.PHONY : libstreamvbyte/fast
 
 #=============================================================================
 # Target rules for targets named test
@@ -155,83 +155,83 @@ run/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/run.dir/build.make CMakeFiles/run.dir/build
 .PHONY : run/fast
 
-src/decode/decode.o: src/decode/decode.cpp.o
-.PHONY : src/decode/decode.o
+libstreamvbyte/decode/decode.o: libstreamvbyte/decode/decode.cpp.o
+.PHONY : libstreamvbyte/decode/decode.o
 
 # target to build an object file
-src/decode/decode.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamvbyte.dir/build.make CMakeFiles/streamvbyte.dir/src/decode/decode.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/decode/decode.cpp.o
-.PHONY : src/decode/decode.cpp.o
+libstreamvbyte/decode/decode.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/libstreamvbyte.dir/build.make CMakeFiles/libstreamvbyte.dir/libstreamvbyte/decode/decode.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/libstreamvbyte/decode/decode.cpp.o
+.PHONY : libstreamvbyte/decode/decode.cpp.o
 
-src/decode/decode.i: src/decode/decode.cpp.i
-.PHONY : src/decode/decode.i
+libstreamvbyte/decode/decode.i: libstreamvbyte/decode/decode.cpp.i
+.PHONY : libstreamvbyte/decode/decode.i
 
 # target to preprocess a source file
-src/decode/decode.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamvbyte.dir/build.make CMakeFiles/streamvbyte.dir/src/decode/decode.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/decode/decode.cpp.i
-.PHONY : src/decode/decode.cpp.i
+libstreamvbyte/decode/decode.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/libstreamvbyte.dir/build.make CMakeFiles/libstreamvbyte.dir/libstreamvbyte/decode/decode.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/libstreamvbyte/decode/decode.cpp.i
+.PHONY : libstreamvbyte/decode/decode.cpp.i
 
-src/decode/decode.s: src/decode/decode.cpp.s
-.PHONY : src/decode/decode.s
+libstreamvbyte/decode/decode.s: libstreamvbyte/decode/decode.cpp.s
+.PHONY : libstreamvbyte/decode/decode.s
 
 # target to generate assembly for a file
-src/decode/decode.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamvbyte.dir/build.make CMakeFiles/streamvbyte.dir/src/decode/decode.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/decode/decode.cpp.s
-.PHONY : src/decode/decode.cpp.s
+libstreamvbyte/decode/decode.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/libstreamvbyte.dir/build.make CMakeFiles/libstreamvbyte.dir/libstreamvbyte/decode/decode.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/libstreamvbyte/decode/decode.cpp.s
+.PHONY : libstreamvbyte/decode/decode.cpp.s
 
-src/encode/encode.o: src/encode/encode.cpp.o
-.PHONY : src/encode/encode.o
+libstreamvbyte/encode/encode.o: libstreamvbyte/encode/encode.cpp.o
+.PHONY : libstreamvbyte/encode/encode.o
 
 # target to build an object file
-src/encode/encode.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamvbyte.dir/build.make CMakeFiles/streamvbyte.dir/src/encode/encode.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/encode/encode.cpp.o
-.PHONY : src/encode/encode.cpp.o
+libstreamvbyte/encode/encode.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/libstreamvbyte.dir/build.make CMakeFiles/libstreamvbyte.dir/libstreamvbyte/encode/encode.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/libstreamvbyte/encode/encode.cpp.o
+.PHONY : libstreamvbyte/encode/encode.cpp.o
 
-src/encode/encode.i: src/encode/encode.cpp.i
-.PHONY : src/encode/encode.i
+libstreamvbyte/encode/encode.i: libstreamvbyte/encode/encode.cpp.i
+.PHONY : libstreamvbyte/encode/encode.i
 
 # target to preprocess a source file
-src/encode/encode.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamvbyte.dir/build.make CMakeFiles/streamvbyte.dir/src/encode/encode.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/encode/encode.cpp.i
-.PHONY : src/encode/encode.cpp.i
+libstreamvbyte/encode/encode.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/libstreamvbyte.dir/build.make CMakeFiles/libstreamvbyte.dir/libstreamvbyte/encode/encode.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/libstreamvbyte/encode/encode.cpp.i
+.PHONY : libstreamvbyte/encode/encode.cpp.i
 
-src/encode/encode.s: src/encode/encode.cpp.s
-.PHONY : src/encode/encode.s
+libstreamvbyte/encode/encode.s: libstreamvbyte/encode/encode.cpp.s
+.PHONY : libstreamvbyte/encode/encode.s
 
 # target to generate assembly for a file
-src/encode/encode.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamvbyte.dir/build.make CMakeFiles/streamvbyte.dir/src/encode/encode.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/encode/encode.cpp.s
-.PHONY : src/encode/encode.cpp.s
+libstreamvbyte/encode/encode.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/libstreamvbyte.dir/build.make CMakeFiles/libstreamvbyte.dir/libstreamvbyte/encode/encode.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/libstreamvbyte/encode/encode.cpp.s
+.PHONY : libstreamvbyte/encode/encode.cpp.s
 
-src/streamvbyte.o: src/streamvbyte.cpp.o
-.PHONY : src/streamvbyte.o
+libstreamvbyte/streamvbyte.o: libstreamvbyte/streamvbyte.cpp.o
+.PHONY : libstreamvbyte/streamvbyte.o
 
 # target to build an object file
-src/streamvbyte.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamvbyte.dir/build.make CMakeFiles/streamvbyte.dir/src/streamvbyte.cpp.o
-.PHONY : src/streamvbyte.cpp.o
+libstreamvbyte/streamvbyte.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/libstreamvbyte.dir/build.make CMakeFiles/libstreamvbyte.dir/libstreamvbyte/streamvbyte.cpp.o
+.PHONY : libstreamvbyte/streamvbyte.cpp.o
 
-src/streamvbyte.i: src/streamvbyte.cpp.i
-.PHONY : src/streamvbyte.i
+libstreamvbyte/streamvbyte.i: libstreamvbyte/streamvbyte.cpp.i
+.PHONY : libstreamvbyte/streamvbyte.i
 
 # target to preprocess a source file
-src/streamvbyte.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamvbyte.dir/build.make CMakeFiles/streamvbyte.dir/src/streamvbyte.cpp.i
-.PHONY : src/streamvbyte.cpp.i
+libstreamvbyte/streamvbyte.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/libstreamvbyte.dir/build.make CMakeFiles/libstreamvbyte.dir/libstreamvbyte/streamvbyte.cpp.i
+.PHONY : libstreamvbyte/streamvbyte.cpp.i
 
-src/streamvbyte.s: src/streamvbyte.cpp.s
-.PHONY : src/streamvbyte.s
+libstreamvbyte/streamvbyte.s: libstreamvbyte/streamvbyte.cpp.s
+.PHONY : libstreamvbyte/streamvbyte.s
 
 # target to generate assembly for a file
-src/streamvbyte.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/streamvbyte.dir/build.make CMakeFiles/streamvbyte.dir/src/streamvbyte.cpp.s
-.PHONY : src/streamvbyte.cpp.s
+libstreamvbyte/streamvbyte.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/libstreamvbyte.dir/build.make CMakeFiles/libstreamvbyte.dir/libstreamvbyte/streamvbyte.cpp.s
+.PHONY : libstreamvbyte/streamvbyte.cpp.s
 
 tests/test.o: tests/test.cpp.o
 .PHONY : tests/test.o
@@ -266,17 +266,17 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... run"
-	@echo "... streamvbyte"
+	@echo "... libstreamvbyte"
 	@echo "... test"
-	@echo "... src/decode/decode.o"
-	@echo "... src/decode/decode.i"
-	@echo "... src/decode/decode.s"
-	@echo "... src/encode/encode.o"
-	@echo "... src/encode/encode.i"
-	@echo "... src/encode/encode.s"
-	@echo "... src/streamvbyte.o"
-	@echo "... src/streamvbyte.i"
-	@echo "... src/streamvbyte.s"
+	@echo "... libstreamvbyte/decode/decode.o"
+	@echo "... libstreamvbyte/decode/decode.i"
+	@echo "... libstreamvbyte/decode/decode.s"
+	@echo "... libstreamvbyte/encode/encode.o"
+	@echo "... libstreamvbyte/encode/encode.i"
+	@echo "... libstreamvbyte/encode/encode.s"
+	@echo "... libstreamvbyte/streamvbyte.o"
+	@echo "... libstreamvbyte/streamvbyte.i"
+	@echo "... libstreamvbyte/streamvbyte.s"
 	@echo "... tests/test.o"
 	@echo "... tests/test.i"
 	@echo "... tests/test.s"
