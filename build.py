@@ -29,8 +29,7 @@ class CMakeBuild(build_ext):
             self.build_extension(ext)
 
     def build_extension(self, ext: CMakeExtension):
-        cwd = pathlib.Path().absolute()
-        ext_dir = pathlib.Path(self.get_ext_fullpath(ext.name)).parent.absolute()
+        ext_dir = pathlib.Path(self.get_ext_fullpath(ext.name)).parent.absolute() / ext.name
 
         debug = int(os.environ.get("DEBUG", 0)
                     ) if self.debug is None else self.debug
@@ -96,4 +95,6 @@ def build(setup_kwargs: Dict[str, Any]):
         long_description="",
         ext_modules=[CMakeExtension("libstreamvbyte")],
         cmdclass=dict(build_ext=CMakeBuild),
+        package_data={"libstreamvbyte": ["*.pyd", "*.so"]},
+        has_ext_modules=lambda: True,
     )

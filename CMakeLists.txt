@@ -22,17 +22,17 @@ set(CMAKE_CXX_FLAGS "-Wall -std=c++17 -O3 ${ARCH_EXTENSION}")
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 
 add_subdirectory(pybind11)
-pybind11_add_module(libstreamvbyte ./libstreamvbyte/streamvbyte.cpp)
+pybind11_add_module(libstreamvbyte ./src/streamvbyte.cpp)
 target_compile_definitions(libstreamvbyte PRIVATE VERSION_INFO=${PROJECT_VERSION})
 
-target_include_directories(libstreamvbyte PRIVATE ./include ./libstreamvbyte)
-target_sources(libstreamvbyte PRIVATE ./libstreamvbyte/encode/encode.cpp ./libstreamvbyte/decode/decode.cpp)
+target_include_directories(libstreamvbyte PRIVATE ./include ./src)
+target_sources(libstreamvbyte PRIVATE ./src/encode/encode.cpp ./src/decode/decode.cpp)
 
 set_property(TARGET libstreamvbyte PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 add_executable(test ./tests/test.cpp)
-target_include_directories(test PRIVATE ./include ./libstreamvbyte)
-target_sources(test PRIVATE ./libstreamvbyte/encode/encode.cpp ./libstreamvbyte/decode/decode.cpp)
+target_include_directories(test PRIVATE ./include ./src)
+target_sources(test PRIVATE ./src/encode/encode.cpp ./src/decode/decode.cpp)
 
 add_custom_target(run
     COMMAND test

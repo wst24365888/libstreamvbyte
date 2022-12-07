@@ -5,7 +5,7 @@
 
 namespace py = pybind11;
 
-PYBIND11_MODULE(streamvbyte, m) {
+PYBIND11_MODULE(libstreamvbyte, m) {
     m.doc() = "C++ StreamVByte Plugin";
 
     m.def(

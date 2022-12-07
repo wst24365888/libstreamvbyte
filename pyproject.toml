@@ -12,7 +12,6 @@ setuptools = "^65.6.3"
 
 [tool.cibuildwheel]
 build = ["cp310-*", "cp311-*"]
-build-verbosity = 1
 
 [build-system]
 requires = ["poetry-core", "setuptools"]
