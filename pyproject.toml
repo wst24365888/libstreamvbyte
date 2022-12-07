@@ -13,7 +13,6 @@ include = [
 ]
 
 [tool.poetry.build]
-generate-setup-file=false
 script="build.py"
 
 [tool.poetry.dependencies]
