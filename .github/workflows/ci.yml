@@ -37,6 +37,7 @@ jobs:
         env:
           CIBW_ARCHS_MACOS: universal2
           CIBW_ARCHS_LINUX: "auto aarch64"
+          CIBW_PROJECT_REQUIRES_PYTHON: ">=3.10"
 
       - name: Verify clean directory
         run: git diff --exit-code

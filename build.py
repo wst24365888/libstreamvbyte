@@ -95,6 +95,4 @@ def build(setup_kwargs: Dict[str, Any]):
         long_description="",
         ext_modules=[CMakeExtension("libstreamvbyte")],
         cmdclass=dict(build_ext=CMakeBuild),
-        package_data={"libstreamvbyte": ["*.pyd", "*.so"]},
-        has_ext_modules=lambda: True,
     )
