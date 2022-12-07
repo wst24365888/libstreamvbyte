@@ -47,4 +47,4 @@ jobs:
       - name: Test
         run: |
           ./test
-          pytest ./tests/test.py
+          poetry run python -m pytest ./tests/test.py
