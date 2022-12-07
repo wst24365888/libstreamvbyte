@@ -9,6 +9,7 @@ jobs:
   build_sdist:
     name: Build SDist
     runs-on: ubuntu-latest
+    if: (github.event.workflow_run.conclusion == 'success') && startsWith(github.ref, 'refs/tags/v'
     steps:
     - uses: actions/checkout@v3
       with:
@@ -27,7 +28,7 @@ jobs:
   build_wheels:
     name: Wheels on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
-    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build_sdist
     strategy:
       fail-fast: false
       matrix:
