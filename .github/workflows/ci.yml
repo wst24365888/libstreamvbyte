@@ -25,8 +25,14 @@ jobs:
         with:
           python-version: "3.10.4"
 
-      - name: Install pytest
-        run: pip install pytest
+      - name: Setup Poetry
+        uses: Gr1N/setup-poetry@v7
+        with:
+          poetry-version: 1.1.7
+
+      - name: Install Dependencies
+        run: |
+          poetry install --only test
         
       - name: Setup CMake
         uses: jwlawson/actions-setup-cmake@v1.13
