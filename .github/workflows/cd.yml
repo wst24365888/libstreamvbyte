@@ -1,0 +1,124 @@
+name: CD
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
+
+jobs:
+  build_sdist:
+    name: Build SDist
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: true
+
+    - name: Build SDist
+      run: pipx run build --sdist
+
+    - name: Check metadata
+      run: pipx run twine check dist/*
+
+    - uses: actions/upload-artifact@v3
+      with:
+        path: dist/*.tar.gz
+
+  build_wheels:
+    name: Wheels on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    if: startsWith(github.ref, 'refs/tags/v')
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Switch to Current Branch
+        run: git checkout ${{ env.BRANCH }}
+
+      - name: Setup Python 3.10.4
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.10.4"
+
+      - name: Setup QEMU
+        if: matrix.os == 'ubuntu-latest'
+        uses: docker/setup-qemu-action@v2
+
+      - uses: pypa/cibuildwheel@v2.11.2
+        env:
+          CIBW_ARCHS_MACOS: universal2
+          CIBW_ARCHS_LINUX: "auto aarch64"
+          CIBW_PROJECT_REQUIRES_PYTHON: ">=3.10"
+
+      - name: Verify clean directory
+        run: git diff --exit-code
+        shell: bash
+
+      - name: Upload wheels
+        uses: actions/upload-artifact@v3
+        with:
+          path: wheelhouse/*.whl
+
+  release-pypi:
+    name: Release to PyPI
+    needs: build_wheels
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Switch to Current Branch
+        run: git checkout ${{ env.BRANCH }}
+    
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.10.4"
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: artifact
+          path: dist
+      
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@v1.6.4
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}
+          verbose: true
+
+  release-github:
+    name: Release to GitHub
+    needs: build_wheels
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Switch to Current Branch
+        run: git checkout ${{ env.BRANCH }}
+    
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.10.4"
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: artifact
+          path: dist
+      
+      - name: Release Tagged Version
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          files: |
+            dist/**

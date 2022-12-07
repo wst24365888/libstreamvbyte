@@ -8,13 +8,9 @@ on:
       - main
 
 jobs:
-  build_wheels:
-    name: Wheels on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+  test:
+    name: Test
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
@@ -29,21 +25,20 @@ jobs:
         with:
           python-version: "3.10.4"
 
-      - name: Setup QEMU
-        if: matrix.os == 'ubuntu-latest'
-        uses: docker/setup-qemu-action@v2
-
-      - uses: pypa/cibuildwheel@v2.11.2
-        env:
-          CIBW_ARCHS_MACOS: universal2
-          CIBW_ARCHS_LINUX: "auto aarch64"
-          CIBW_PROJECT_REQUIRES_PYTHON: ">=3.10"
-
-      - name: Verify clean directory
-        run: git diff --exit-code
-        shell: bash
-
-      - name: Upload wheels
-        uses: actions/upload-artifact@v3
+      - name: Install pytest
+        run: pip install pytest
+        
+      - name: Setup CMake
+        uses: jwlawson/actions-setup-cmake@v1.13
         with:
-          path: wheelhouse/*.whl
+          cmake-version: '3.16.x'
+
+      - name: Build
+        run: |
+          cmake . -DCMAKE_BUILD_TYPE=Release
+          cmake --build . --config Release
+
+      - name: Test
+        run: |
+          ./test
+          pytest ./tests/test.py
