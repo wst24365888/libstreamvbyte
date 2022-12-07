@@ -20,7 +20,7 @@ PYBIND11_MODULE(libstreamvbyte, m) {
             py::buffer_info out_buf = out.request();
 
             std::size_t compressed_size = streamvbyte::encode(reinterpret_cast<uint32_t*>(in_buf.ptr), in_buf.size, reinterpret_cast<uint8_t*>(out_buf.ptr));
-            out.resize({compressed_size});
+            out.resize({ compressed_size });
 
             return out;
         },

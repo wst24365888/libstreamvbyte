@@ -5,6 +5,7 @@ N = 2**20 + 2
 LOW = 0
 HIGH = 2**32
 
+
 def test_encode_decode():
     before_encode = np.random.randint(LOW, HIGH, N, dtype=np.uint32)
 
