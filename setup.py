@@ -32,7 +32,7 @@ class CMakeBuild(build_ext):
 
     def build_extension(self, ext: CMakeExtension):
         ext_dir = pathlib.Path(self.get_ext_fullpath(
-            ext.name)).parent.absolute() / ext.name
+            ext.name)).parent.absolute()
 
         debug = int(os.environ.get("DEBUG", 0)
                     ) if self.debug is None else self.debug
@@ -99,8 +99,6 @@ setup(
     maintainer='HSING-HAN WU (Xyphuz)',
     maintainer_email='xyphuzwu@gmail.com',
     url='https://github.com/wst24365888/libstreamvbyte',
-    package_data={'libstreamvbyte': ['*']},
-    install_requires=['setuptools>=65.6.3,<66.0.0'],
     python_requires='>=3.10,<4.0',
     ext_modules=[CMakeExtension("libstreamvbyte")],
     cmdclass=dict(build_ext=CMakeBuild),
