@@ -14,8 +14,6 @@ elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64")
     set(ARCH_EXTENSION "-mssse3")
 elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "arm64")
     set(ARCH_EXTENSION "-mfpu=neon")
-elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64")
-    set(ARCH_EXTENSION "-mfpu=neon")
 endif()
 
 set(CMAKE_CXX_FLAGS "-Wall -std=c++17 -O3 ${ARCH_EXTENSION}")
