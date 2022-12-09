@@ -123,7 +123,7 @@ after_decode = svb.decode(compressed_bytes, N)
 ## Roadmap
 
 - [ ] Zigzag encoding/decoding.
-- [ ] Support ARM processor with `NEON` intrinsics.
+- [ ] Support ARM processors with `NEON` intrinsics.
 - [ ] Differential coding (delta encoding/decoding).
 
 See the [open issues](https://github.com/wst24365888/libstreamvbyte/issues)
