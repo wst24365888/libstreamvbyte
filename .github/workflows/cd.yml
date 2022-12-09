@@ -1,10 +1,11 @@
 name: CD
 
 on:
-  workflow_run:
-    workflows: ["CI"]
-    types:
-      - completed
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
 
 permissions:
   id-token: "write"
@@ -13,10 +14,51 @@ permissions:
   pull-requests: "read"
 
 jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Switch to Current Branch
+        run: git checkout ${{ env.BRANCH }}
+
+      - name: Setup Python 3.10.4
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.10.4"
+
+      - name: Setup Poetry
+        uses: Gr1N/setup-poetry@v7
+        with:
+          poetry-version: 1.2.2
+
+      - name: Install Dependencies
+        run: |
+          poetry install --only test
+
+      - name: Setup CMake
+        uses: jwlawson/actions-setup-cmake@v1.13
+        with:
+          cmake-version: "3.16.x"
+
+      - name: Build
+        run: |
+          cmake . -DCMAKE_BUILD_TYPE=Release
+          cmake --build . --config Release
+
+      - name: Test
+        run: |
+          ./test
+          poetry run python -m pytest ./tests/test.py
+
   build_sdist:
     name: Build SDist
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push' && startsWith(github.event.workflow_run.head_branch, 'v') }}
+    needs: test
     steps:
       - uses: actions/checkout@v3
         with:
@@ -113,10 +155,6 @@ jobs:
 
       - name: Switch to Current Branch
         run: git checkout ${{ env.BRANCH }}
-
-      - uses: actions/setup-python@v4
-        with:
-          python-version: "3.10.4"
 
       - uses: actions/download-artifact@v3
         with:
