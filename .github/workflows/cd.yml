@@ -13,26 +13,21 @@ permissions:
   pull-requests: "read"
 
 jobs:
-  # from https://github.com/community/community/discussions/21090#discussioncomment-3226271
-  get_workflow_conclusion:
-    name: Get Conclusion of workflow_run Event
+  echo_status:
+    name: Echo Status
     runs-on: ubuntu-latest
     steps:
-      - name: Get Workflow Run
-        uses: octokit/request-action@v2.1.7
-        id: get_conclusion
-        with:
-          route: GET /repos/${{ github.repository }}/actions/runs/${{ github.event.workflow_run.id }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: |
-          echo "Conclusion: ${{ steps.get_conclusion.outputs.data.conclusion }}"
-          echo "conclusion=${{ steps.get_conclusion.outputs.data.conclusion }}" >> $GITHUB_OUTPUT
+      - name: Echo Status
+        run: |
+          echo ${{ github.event.workflow_run.conclusion }}
+          echo ${{ github.event.workflow_run.event }}
+          echo ${{ github.event.workflow_run.head_branch }}
+          echo ${{ github.event.workflow_run.head_commit }}
 
   build_sdist:
     name: Build SDist
     runs-on: ubuntu-latest
-    if: ${{ needs.get_workflow_conclusion.outputs.conclusion == 'success' && startsWith(github.ref, 'refs/tags/v') }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push' && startsWith(github.event.workflow_run.head_branch, 'refs/tags/v') }}
     steps:
       - uses: actions/checkout@v3
         with:
