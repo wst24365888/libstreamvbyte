@@ -55,11 +55,13 @@
 
 ## About The Project
 
-`libstreamvbyte` is a `C++` implementation of [StreamVByte](#reference), with `Python` bidings using `pybind11`. 
+`libstreamvbyte` is a `C++` implementation of [StreamVByte](#reference), with `Python` bindings using `pybind11`. 
 
 [StreamVByte](#reference) is a integer compression technique that use SIMD instructions (vectorization) to improve performance. The library is optimized for CPUs with the `SSSE3` instruction set (which is supported by most x86_64 processors), and can also be used with ARM processors and other 32-bit architectures, although it will fall back to scalar implementations in those cases.
 
 With `libstreamvbyte`, you can quickly and efficiently compress integer sequences, reducing the amount of storage space and network bandwidth required. The library is easy to use and integrates seamlessly with `Python` via `pybind11` bindings. Whether you're working with large datasets or building a distributed computing system, `libstreamvbyte` can help you improve performance and reduce the resources needed to handle your data.
+
+Currently supports `Python 3.10+` on Windows, Linux (`manylinux_2_17`, `musllinux_1_1`) and macOS (`universal2`).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
