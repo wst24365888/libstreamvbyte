@@ -93,7 +93,7 @@ setup(
     name='libstreamvbyte',
     version='0.1.0',
     description='A C++ implementation with Python bindings of StreamVByte.',
-    long_description='',
+    long_description=open('README.md').read(),
     author='HSING-HAN WU (Xyphuz)',
     author_email='xyphuzwu@gmail.com',
     maintainer='HSING-HAN WU (Xyphuz)',
@@ -102,4 +102,5 @@ setup(
     python_requires='>=3.10,<4.0',
     ext_modules=[CMakeExtension("libstreamvbyte")],
     cmdclass=dict(build_ext=CMakeBuild),
+    long_description_content_type='text/markdown',
 )
