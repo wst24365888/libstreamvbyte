@@ -85,15 +85,15 @@ Import `libstreamvbyte` first.
 import libstreamvbyte as svb
 ```
 
-Then here is the API.
+And here are the APIs.
 
 ```python
 # Encode a list of integers into a byte array.
 # Currently only supports np.uint32
-def encode(arg0: numpy.ndarray[numpy.uint32]) -> numpy.ndarray[numpy.uint8]
+encode(arg0: numpy.ndarray[numpy.uint32]) -> numpy.ndarray[numpy.uint8]
 
 # Decode a byte array into a list of integers.
-def decode(arg0: numpy.ndarray[numpy.uint8], arg1: int) -> numpy.ndarray[numpy.uint32]
+decode(arg0: numpy.ndarray[numpy.uint8], arg1: int) -> numpy.ndarray[numpy.uint32]
 ```
 
 ### Example
