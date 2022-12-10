@@ -45,6 +45,13 @@ std::size_t decode(const uint8_t* in, uint32_t* out, std::size_t count);
 */
 std::vector<uint32_t> decode(const std::vector<uint8_t>& in, std::size_t count);
 
+/*
+    Returns the maximum number of bytes that can be written by encode().
+
+    @param size: the number of unsigned integers to encode
+
+    @return the maximum number of bytes that can be written by encode()
+*/
 static inline size_t max_compressed_size(const uint32_t size) {
     return (size + 3) / 4 + size * sizeof(uint32_t);
 }
