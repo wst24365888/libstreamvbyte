@@ -40,7 +40,7 @@ class CMakeBuild(build_ext):
 
         cmake_args = [
             f"-DBUILD_SHARED_LIBS=OFF",
-            f"-DBUILD_PYBIND=ON",
+            f"-DBUILD_PYBIND11=ON",
             f"-DBUILD_TESTS=ON",
             f"-DCMAKE_LIBRARY_OUTPUT_DIRECTORY={ext_dir}",
             f"-DPYTHON_EXECUTABLE={sys.executable}",

@@ -17,11 +17,11 @@ elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "arm64")
 endif()
 
 option(BUILD_SHARED_LIBS "Build shared libraries." ON)
-option(BUILD_PYBIND "Build pybind11." OFF)
+option(BUILD_PYBIND11 "Build pybind11." OFF)
 option(BUILD_TESTS "Build tests." OFF)
 
-if (BUILD_PYBIND AND BUILD_SHARED_LIBS)
-    message(FATAL_ERROR "BUILD_PYBIND and BUILD_SHARED_LIBS are mutually exclusive.")
+if (BUILD_PYBIND11 AND BUILD_SHARED_LIBS)
+    message(FATAL_ERROR "BUILD_PYBIND11 and BUILD_SHARED_LIBS are mutually exclusive.")
 endif()
 
 if (BUILD_SHARED_LIBS)
@@ -40,7 +40,7 @@ if (BUILD_SHARED_LIBS)
         COMMAND rm -f ${CMAKE_INSTALL_PREFIX}/lib/libstreamvbyte.so
         COMMAND rm -f ${CMAKE_INSTALL_PREFIX}/include/streamvbyte.h
     )
-elseif (BUILD_PYBIND)
+elseif (BUILD_PYBIND11)
     set(CMAKE_CXX_FLAGS "-Wall -std=c++17 -O3 ${ARCH_EXTENSION}")
     set(CMAKE_CXX_FLAGS_DEBUG "-g")
 
