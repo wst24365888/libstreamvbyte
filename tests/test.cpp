@@ -34,5 +34,12 @@ int main() {
     uint32_t* after_zigzag_encode = new uint32_t[N];
     streamvbyte::encode_zigzag(before_zigzag_encode, N, after_zigzag_encode);
 
+    int32_t* after_zigzag_decode = new int32_t[N];
+    streamvbyte::decode_zigzag(after_zigzag_encode, N, after_zigzag_decode);
+
+    for (std::size_t i = 0; i < N; i++) {
+        assert(before_zigzag_encode[i] == after_zigzag_decode[i]);
+    }
+
     return 0;
 }
