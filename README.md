@@ -215,17 +215,20 @@ after_decode = svb.decode(compressed_bytes, N)
 int main() {
     std::size_t N = (1 << 20);
 
-    uint32_t* before_encode = static_cast<uint32_t*>(malloc(N * sizeof(uint32_t)));
-    
-    uint8_t* compressed_bytes = static_cast<uint8_t*>(malloc(streamvbyte::max_compressed_size(N)));
+    uint32_t* before_encode = new uint32_t[N];
+    for (std::size_t i = 0; i < N; i++) {
+        before_encode[i] = rand();
+    }
+
+    uint8_t* compressed_bytes = new uint8_t[streamvbyte::max_compressed_size(N)];
     std::size_t bytes_encoded = streamvbyte::encode(before_encode, N, compressed_bytes);
 
-    uint32_t* after_decode = static_cast<uint32_t*>(malloc(N * sizeof(uint32_t)));
+    uint32_t* after_decode = new uint32_t[N];
     std::size_t bytes_decoded = streamvbyte::decode(compressed_bytes, after_decode, N);
 
-    free(compressed_bytes);
-    free(before_encode);
-    free(after_decode);
+    delete[] before_encode;
+    delete[] compressed_bytes;
+    delete[] after_decode;
 
     return 0;
 }
