@@ -1,13 +1,13 @@
-#include "decode_scalar.hpp"
+#include "decode_streamvbyte_scalar.hpp"
 #include "streamvbyte.h"
 #include <iostream>
 
 #if defined(_MSC_VER) && defined(_M_AMD64)
-#include "decode_ssse3.hpp"
+#include "decode_streamvbyte_ssse3.hpp"
 #endif
 
 #if defined(__SSSE3__)
-#include "decode_ssse3.hpp"
+#include "decode_streamvbyte_ssse3.hpp"
 #endif
 
 std::size_t streamvbyte::decode(const uint8_t* in, uint32_t* out, std::size_t count) {

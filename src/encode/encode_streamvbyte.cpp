@@ -1,13 +1,13 @@
-#include "encode_scalar.hpp"
+#include "encode_streamvbyte_scalar.hpp"
 #include "streamvbyte.h"
 #include <vector>
 
 #if defined(_MSC_VER) && defined(_M_AMD64)
-#include "encode_ssse3.hpp"
+#include "encode_streamvbyte_ssse3.hpp"
 #endif
 
 #if defined(__SSSE3__)
-#include "encode_ssse3.hpp"
+#include "encode_streamvbyte_ssse3.hpp"
 #endif
 
 std::size_t streamvbyte::encode(const uint32_t* in, std::size_t count, uint8_t* out) {
