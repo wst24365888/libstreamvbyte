@@ -39,6 +39,9 @@ class CMakeBuild(build_ext):
         cfg = "Debug" if debug else "Release"
 
         cmake_args = [
+            f"-DBUILD_SHARED_LIBS=OFF",
+            f"-DBUILD_PYBIND=ON",
+            f"-DBUILD_TESTS=ON",
             f"-DCMAKE_LIBRARY_OUTPUT_DIRECTORY={ext_dir}",
             f"-DPYTHON_EXECUTABLE={sys.executable}",
             f"-DCMAKE_BUILD_TYPE={cfg}",

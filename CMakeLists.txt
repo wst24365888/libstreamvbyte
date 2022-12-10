@@ -16,24 +16,46 @@ elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "arm64")
     set(ARCH_EXTENSION "-mfpu=neon")
 endif()
 
-set(CMAKE_CXX_FLAGS "-Wall -std=c++17 -O3 ${ARCH_EXTENSION}")
-set(CMAKE_CXX_FLAGS_DEBUG "-g")
+option(BUILD_SHARED_LIBS "Build shared libraries." ON)
+option(BUILD_PYBIND "Build pybind11." OFF)
+option(BUILD_TESTS "Build tests." OFF)
 
-add_subdirectory(pybind11)
-pybind11_add_module(libstreamvbyte ./src/streamvbyte.cpp)
-target_compile_definitions(libstreamvbyte PRIVATE VERSION_INFO=${PROJECT_VERSION})
+if (BUILD_PYBIND AND BUILD_SHARED_LIBS)
+    message(FATAL_ERROR "BUILD_PYBIND and BUILD_SHARED_LIBS are mutually exclusive.")
+endif()
 
-target_include_directories(libstreamvbyte PRIVATE ./include ./src)
-target_sources(libstreamvbyte PRIVATE ./src/encode/encode.cpp ./src/decode/decode.cpp)
+if (BUILD_SHARED_LIBS)
+    add_library(streamvbyte ./src/encode/encode.cpp ./src/decode/decode.cpp)
+    target_compile_definitions(streamvbyte PRIVATE VERSION_INFO=${PROJECT_VERSION})
 
-set_property(TARGET libstreamvbyte PROPERTY POSITION_INDEPENDENT_CODE ON)
+    target_include_directories(streamvbyte PRIVATE ./include ./src)
 
-add_executable(test ./tests/test.cpp)
-target_include_directories(test PRIVATE ./include ./src)
-target_sources(test PRIVATE ./src/encode/encode.cpp ./src/decode/decode.cpp)
+    set_property(TARGET streamvbyte PROPERTY POSITION_INDEPENDENT_CODE ON)
 
-add_custom_target(run
-    COMMAND test
-    DEPENDS test
-    WORKING_DIRECTORY ${CMAKE_PROJECT_DIR}
-)
+    install(TARGETS streamvbyte DESTINATION lib)
+    install(FILES ./include/streamvbyte.h DESTINATION include)
+
+    add_custom_target(
+        uninstall
+        COMMAND rm -f ${CMAKE_INSTALL_PREFIX}/lib/libstreamvbyte.so
+        COMMAND rm -f ${CMAKE_INSTALL_PREFIX}/include/streamvbyte.h
+    )
+elseif (BUILD_PYBIND)
+    set(CMAKE_CXX_FLAGS "-Wall -std=c++17 -O3 ${ARCH_EXTENSION}")
+    set(CMAKE_CXX_FLAGS_DEBUG "-g")
+
+    add_subdirectory(pybind11)
+    pybind11_add_module(libstreamvbyte ./src/streamvbyte.cpp)
+    target_compile_definitions(libstreamvbyte PRIVATE VERSION_INFO=${PROJECT_VERSION})
+
+    target_include_directories(libstreamvbyte PRIVATE ./include ./src)
+    target_sources(libstreamvbyte PRIVATE ./src/encode/encode.cpp ./src/decode/decode.cpp)
+
+    set_property(TARGET libstreamvbyte PROPERTY POSITION_INDEPENDENT_CODE ON)
+endif()
+
+if (BUILD_TESTS)
+    add_executable(test ./tests/test.cpp)
+    target_include_directories(test PRIVATE ./include ./src)
+    target_sources(test PRIVATE ./src/encode/encode.cpp ./src/decode/decode.cpp)
+endif()
