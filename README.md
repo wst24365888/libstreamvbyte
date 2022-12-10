@@ -182,7 +182,7 @@ std::vector<uint32_t> decode(const std::vector<uint8_t>& in, std::size_t count);
 
     @return the maximum number of bytes that can be written by encode()
 */
-static inline size_t max_compressed_size(const uint32_t size)
+static inline size_t max_compressed_size(const uint32_t size);
 ```
 
 ### Example
@@ -217,13 +217,13 @@ int main() {
 
     uint32_t* before_encode = static_cast<uint32_t*>(malloc(N * sizeof(uint32_t)));
     
-    uint8_t* compressed = static_cast<uint8_t*>(malloc(streamvbyte::max_compressed_size(N)));
-    std::size_t bytes_encoded = streamvbyte::encode(before_encode, N, compressed);
-    
-    uint32_t* after_decode = static_cast<uint32_t*>(malloc(N * sizeof(uint32_t)));
-    std::size_t bytes_decoded = streamvbyte::decode(compressed, after_decode, N);
+    uint8_t* compressed_bytes = static_cast<uint8_t*>(malloc(streamvbyte::max_compressed_size(N)));
+    std::size_t bytes_encoded = streamvbyte::encode(before_encode, N, compressed_bytes);
 
-    free(compressed);
+    uint32_t* after_decode = static_cast<uint32_t*>(malloc(N * sizeof(uint32_t)));
+    std::size_t bytes_decoded = streamvbyte::decode(compressed_bytes, after_decode, N);
+
+    free(compressed_bytes);
     free(before_encode);
     free(after_decode);
 
