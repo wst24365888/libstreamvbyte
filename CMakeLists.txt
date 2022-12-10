@@ -24,7 +24,10 @@ if (BUILD_PYBIND11 AND BUILD_SHARED_LIBS)
     message(FATAL_ERROR "BUILD_PYBIND11 and BUILD_SHARED_LIBS are mutually exclusive.")
 endif()
 
-if (BUILD_SHARED_LIBS)
+set(CMAKE_CXX_FLAGS "-Wall -std=c++17 -O3 ${ARCH_EXTENSION}")
+set(CMAKE_CXX_FLAGS_DEBUG "-g")
+
+if (BUILD_SHARED_LIBS)    
     add_library(streamvbyte ./src/encode/encode_streamvbyte.cpp ./src/decode/decode_streamvbyte.cpp ./src/encode/encode_zigzag.cpp)
     target_compile_definitions(streamvbyte PRIVATE VERSION_INFO=${PROJECT_VERSION})
 
@@ -41,9 +44,6 @@ if (BUILD_SHARED_LIBS)
         COMMAND rm -f ${CMAKE_INSTALL_PREFIX}/include/streamvbyte.h
     )
 elseif (BUILD_PYBIND11)
-    set(CMAKE_CXX_FLAGS "-Wall -std=c++17 -O3 ${ARCH_EXTENSION}")
-    set(CMAKE_CXX_FLAGS_DEBUG "-g")
-
     add_subdirectory(pybind11)
     pybind11_add_module(libstreamvbyte ./src/streamvbyte.cpp)
     target_compile_definitions(libstreamvbyte PRIVATE VERSION_INFO=${PROJECT_VERSION})
