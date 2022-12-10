@@ -71,15 +71,40 @@ Currently supports `Python 3.10+` on Windows, Linux (`manylinux_2_17`, `musllinu
 
 ### Installation
 
-#### Using `pip`
+#### For `Python`
 
-`pip install libstreamvbyte`
+Install from `PyPI` using `pip`.
 
-#### Using `.whl`
+```bash
+pip install libstreamvbyte
+```
 
-See [releases](https://github.com/wst24365888/libstreamvbyte/releases).
+Or install from `.whl` file.
+
+```bash
+pip install "path/to/your/downloaded/whl"
+```
+
+To find appropriate `.whl` file, please visit [releases](https://github.com/wst24365888/libstreamvbyte/releases).
+
+#### For `C++`
+
+You must have `CMake` installed on your system.
+
+```bash
+# clone the repo
+git clone https://github.com/wst24365888/libstreamvbyte
+cd libstreamvbyte
+
+# build and install
+cmake .
+make
+sudo make install
+```
 
 ### Usage
+
+#### For `Python`
 
 Import `libstreamvbyte` first.
 
@@ -98,7 +123,71 @@ encode(arg0: numpy.ndarray[numpy.uint32]) -> numpy.ndarray[numpy.uint8]
 decode(arg0: numpy.ndarray[numpy.uint8], arg1: int) -> numpy.ndarray[numpy.uint32]
 ```
 
+#### For `C++`
+
+Include `streamvbyte.h` first.
+
+```cpp
+#include "streamvbyte.h"
+```
+
+And here are the APIs.
+
+```cpp
+/*
+    Encodes a sequence of 32-bit unsigned integers to a byte array.
+
+    @param in: a sequence of 32-bit unsigned integers
+    @param count: the number of unsigned integers to encode
+    @param out: a byte array
+
+    @return the number of bytes written to out
+*/
+std::size_t encode(const uint32_t* in, std::size_t count, uint8_t* out);
+
+/*
+    Encodes a sequence of 32-bit unsigned integers to a byte array.
+
+    @param in: a vector of 32-bit unsigned integers
+
+    @return the number of bytes written to out
+*/
+std::vector<uint8_t> encode(const std::vector<uint32_t>& in);
+
+/*
+    Decodes a sequence of 32-bit unsigned integers from a byte array.
+
+    @param in: a byte array
+    @param out: a sequence of 32-bit unsigned integers
+    @param count: the number of unsigned integers to decode
+
+    @return the number of bytes written to in
+*/
+std::size_t decode(const uint8_t* in, uint32_t* out, std::size_t count);
+
+/*
+    Decodes a sequence of 32-bit unsigned integers from a byte array.
+
+    @param in: a vector of bytes
+    @param count: the number of unsigned integers to decode
+
+    @return the number of bytes written to in
+*/
+std::vector<uint32_t> decode(const std::vector<uint8_t>& in, std::size_t count);
+
+/*
+    Returns the maximum number of bytes that can be written by encode().
+
+    @param size: the number of unsigned integers to encode
+
+    @return the maximum number of bytes that can be written by encode()
+*/
+static inline size_t max_compressed_size(const uint32_t size)
+```
+
 ### Example
+
+#### For `Python`
 
 ```python
 import libstreamvbyte as svb
@@ -116,6 +205,36 @@ compressed_bytes = svb.encode(before_encode)
 # type(after_decode) == np.ndarray
 # after_decode.dtype == np.uint32
 after_decode = svb.decode(compressed_bytes, N)
+```
+
+#### For `C++`
+
+```cpp
+#include "streamvbyte.h"
+
+int main() {
+    std::size_t N = (1 << 20);
+
+    uint32_t* before_encode = static_cast<uint32_t*>(malloc(N * sizeof(uint32_t)));
+    
+    uint8_t* compressed = static_cast<uint8_t*>(malloc(streamvbyte::max_compressed_size(N)));
+    std::size_t bytes_encoded = streamvbyte::encode(before_encode, N, compressed);
+    
+    uint32_t* after_decode = static_cast<uint32_t*>(malloc(N * sizeof(uint32_t)));
+    std::size_t bytes_decoded = streamvbyte::decode(compressed, after_decode, N);
+
+    free(compressed);
+    free(before_encode);
+    free(after_decode);
+
+    return 0;
+}
+```
+
+Compile it with linking to `libstreamvbyte`.
+
+```bash
+g++ -o example example.cpp -lstreamvbyte
 ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
