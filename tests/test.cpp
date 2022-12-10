@@ -41,5 +41,9 @@ int main() {
         assert(before_zigzag_encode[i] == after_zigzag_decode[i]);
     }
 
+    delete[] before_zigzag_encode;
+    delete[] after_zigzag_encode;
+    delete[] after_zigzag_decode;
+
     return 0;
 }
