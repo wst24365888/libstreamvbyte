@@ -22,3 +22,9 @@ void streamvbyte::encode_zigzag(const int32_t* in, std::size_t count, uint32_t* 
 
     encode_zigzag_scalar(in, count, out);    // side effect: count, out are modified
 }
+
+std::vector<uint32_t> streamvbyte::encode_zigzag(const std::vector<int32_t>& in) {
+    std::vector<uint32_t> out(in.size());
+    encode_zigzag(in.data(), in.size(), out.data());
+    return out;
+}
