@@ -111,11 +111,8 @@ TEST(test, integrated) {
         original_data[i] = rand() - rand();
     }
 
-    std::vector<uint32_t> zigzag_encoded_data = streamvbyte::encode_zigzag(original_data);
-    std::vector<uint8_t> streamvbyte_encoded_data = streamvbyte::encode(zigzag_encoded_data);
-
-    std::vector<uint32_t> streamvbyte_decoded_data = streamvbyte::decode(streamvbyte_encoded_data, N);
-    std::vector<int32_t> zigzag_decoded_data = streamvbyte::decode_zigzag(streamvbyte_decoded_data);
+    std::vector<uint8_t> streamvbyte_encoded_data = streamvbyte::encode(streamvbyte::encode_zigzag(original_data));
+    std::vector<int32_t> zigzag_decoded_data = streamvbyte::decode_zigzag(streamvbyte::decode(streamvbyte_encoded_data, N));
 
     ASSERT_EQ(original_data.size(), zigzag_decoded_data.size());
     for (std::size_t i = 0; i < N; i++) {
