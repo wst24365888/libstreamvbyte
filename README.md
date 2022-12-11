@@ -192,7 +192,7 @@ g++ -o example example.cpp -lstreamvbyte
 
 ## Roadmap
 
-- [ ] Zigzag encoding/decoding.
+- [x] Zigzag encoding/decoding.
 - [ ] Support ARM processors with `NEON` intrinsics.
 - [ ] Differential coding (delta encoding/decoding).
 
