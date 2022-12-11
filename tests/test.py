@@ -31,3 +31,17 @@ def test_zigzag():
 
     assert len(before_encode) == len(after_decode)
     assert np.array_equal(before_encode, after_decode)
+
+def test_integrate():
+    before_encode = np.random.randint(-2**31, 2**31, N, dtype=np.int32)
+
+    compressed_bytes = svb.encode(svb.encode_zigzag(before_encode))
+    assert type(compressed_bytes) == np.ndarray
+    assert compressed_bytes.dtype == np.uint8
+
+    after_decode = svb.decode_zigzag(svb.decode(compressed_bytes, len(before_encode)))
+    assert type(after_decode) == np.ndarray
+    assert after_decode.dtype == np.int32
+
+    assert len(before_encode) == len(after_decode)
+    assert np.array_equal(before_encode, after_decode)
