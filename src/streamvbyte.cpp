@@ -89,5 +89,5 @@ PYBIND11_MODULE(libstreamvbyte, m) {
 
             return false;
         },
-        "Check if the version of current wheel is vectorized.");
+        "Check if the current wheel is a vectorized version.");
 }

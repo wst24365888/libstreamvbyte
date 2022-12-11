@@ -126,6 +126,9 @@ encode_zigzag(arg0: numpy.ndarray[numpy.int32]) -> numpy.ndarray[numpy.uint32]
 
 # Decode an array of unsigned integers into an array of signed integers.
 decode_zigzag(arg0: numpy.ndarray[numpy.uint32]) -> numpy.ndarray[numpy.int32]
+
+# Check if the current wheel is a vectorized version.
+is_vectorized_version() -> bool
 ```
 
 #### For `C++`
