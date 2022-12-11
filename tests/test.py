@@ -5,43 +5,43 @@ N = 2**20 + 2
 
 
 def test_streamvbyte():
-    before_encode = np.random.randint(0, 2**32, N, dtype=np.uint32)
+    original_data = np.random.randint(0, 2**32, N, dtype=np.uint32)
 
-    compressed_bytes = svb.encode(before_encode)
+    compressed_bytes = svb.encode(original_data)
     assert type(compressed_bytes) == np.ndarray
     assert compressed_bytes.dtype == np.uint8
 
-    after_decode = svb.decode(compressed_bytes, N)
-    assert type(after_decode) == np.ndarray
-    assert after_decode.dtype == np.uint32
+    recovered_data = svb.decode(compressed_bytes, N)
+    assert type(recovered_data) == np.ndarray
+    assert recovered_data.dtype == np.uint32
 
-    assert len(before_encode) == len(after_decode)
-    assert np.array_equal(before_encode, after_decode)
+    assert len(original_data) == len(recovered_data)
+    assert np.array_equal(original_data, recovered_data)
 
 def test_zigzag():
-    before_encode = np.random.randint(-2**31, 2**31, N, dtype=np.int32)
+    original_data = np.random.randint(-2**31, 2**31, N, dtype=np.int32)
 
-    after_encode = svb.encode_zigzag(before_encode)
-    assert type(after_encode) == np.ndarray
-    assert after_encode.dtype == np.uint32
+    encoded_unsigend_integers = svb.encode_zigzag(original_data)
+    assert type(encoded_unsigend_integers) == np.ndarray
+    assert encoded_unsigend_integers.dtype == np.uint32
 
-    after_decode = svb.decode_zigzag(after_encode)
-    assert type(after_decode) == np.ndarray
-    assert after_decode.dtype == np.int32
+    recovered_data = svb.decode_zigzag(encoded_unsigend_integers)
+    assert type(recovered_data) == np.ndarray
+    assert recovered_data.dtype == np.int32
 
-    assert len(before_encode) == len(after_decode)
-    assert np.array_equal(before_encode, after_decode)
+    assert len(original_data) == len(recovered_data)
+    assert np.array_equal(original_data, recovered_data)
 
 def test_integrate():
-    before_encode = np.random.randint(-2**31, 2**31, N, dtype=np.int32)
+    original_data = np.random.randint(-2**31, 2**31, N, dtype=np.int32)
 
-    compressed_bytes = svb.encode(svb.encode_zigzag(before_encode))
+    compressed_bytes = svb.encode(svb.encode_zigzag(original_data))
     assert type(compressed_bytes) == np.ndarray
     assert compressed_bytes.dtype == np.uint8
 
-    after_decode = svb.decode_zigzag(svb.decode(compressed_bytes, N))
-    assert type(after_decode) == np.ndarray
-    assert after_decode.dtype == np.int32
+    recovered_data = svb.decode_zigzag(svb.decode(compressed_bytes, N))
+    assert type(recovered_data) == np.ndarray
+    assert recovered_data.dtype == np.int32
 
-    assert len(before_encode) == len(after_decode)
-    assert np.array_equal(before_encode, after_decode)
+    assert len(original_data) == len(recovered_data)
+    assert np.array_equal(original_data, recovered_data)
