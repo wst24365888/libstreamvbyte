@@ -115,12 +115,17 @@ import libstreamvbyte as svb
 And here are the APIs.
 
 ```python
-# Encode a list of integers into a byte array.
-# Currently only supports np.uint32
+# Encode an array of unsigned integers into a byte array.
 encode(arg0: numpy.ndarray[numpy.uint32]) -> numpy.ndarray[numpy.uint8]
 
-# Decode a byte array into a list of integers.
+# Decode a byte array into an array of unsigned integers.
 decode(arg0: numpy.ndarray[numpy.uint8], arg1: int) -> numpy.ndarray[numpy.uint32]
+
+# Encode an array of signed integers into an array of unsigned integers.
+encode_zigzag(arg0: numpy.ndarray[numpy.int32]) -> numpy.ndarray[numpy.uint32]
+
+# Decode an array of unsigned integers into an array of signed integers.
+decode_zigzag(arg0: numpy.ndarray[numpy.uint32]) -> numpy.ndarray[numpy.int32]
 ```
 
 #### For `C++`
@@ -140,19 +145,19 @@ For the APIs, please refer to [include/streamvbyte.h](https://github.com/wst2436
 ```python
 import libstreamvbyte as svb
 
-N = 2**20
+N = 2**20 + 2
 
-# type(before_encode) == np.ndarray
-# before_encode.dtype == np.uint32
-before_encode = np.random.randint(0, 2**32, N, dtype=np.uint32)
+# type(original_data) == np.ndarray
+# original_data.dtype == np.int32
+original_data = np.random.randint(-2**31, 2**31, N, dtype=np.int32)
 
 # type(compressed_bytes) == np.ndarray
 # compressed_bytes.dtype == np.uint8
-compressed_bytes = svb.encode(before_encode)
+compressed_bytes = svb.encode(svb.encode_zigzag(original_data))
 
-# type(after_decode) == np.ndarray
-# after_decode.dtype == np.uint32
-after_decode = svb.decode(compressed_bytes, N)
+# type(recovered_data) == np.ndarray
+# recovered_data.dtype == np.int32
+recovered_data = svb.decode_zigzag(svb.decode(compressed_bytes, N))
 ```
 
 #### For `C++`
@@ -161,22 +166,15 @@ after_decode = svb.decode(compressed_bytes, N)
 #include "streamvbyte.h"
 
 int main() {
-    std::size_t N = (1 << 20);
+    std::size_t N = (1 << 20) + 2;
 
-    uint32_t* before_encode = new uint32_t[N];
+    std::vector<int32_t> original_data(N);
     for (std::size_t i = 0; i < N; i++) {
-        before_encode[i] = rand();
+        original_data[i] = rand() - rand();
     }
 
-    uint8_t* compressed_bytes = new uint8_t[streamvbyte::max_compressed_size(N)];
-    std::size_t bytes_encoded = streamvbyte::encode(before_encode, N, compressed_bytes);
-
-    uint32_t* after_decode = new uint32_t[N];
-    std::size_t bytes_decoded = streamvbyte::decode(compressed_bytes, after_decode, N);
-
-    delete[] before_encode;
-    delete[] compressed_bytes;
-    delete[] after_decode;
+    std::vector<uint8_t> compressed_bytes = streamvbyte::encode(streamvbyte::encode_zigzag(original_data));
+    std::vector<int32_t> recovered_data = streamvbyte::decode_zigzag(streamvbyte::decode(compressed_bytes, N));
 
     return 0;
 }
