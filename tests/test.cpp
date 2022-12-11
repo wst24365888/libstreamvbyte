@@ -1,5 +1,5 @@
-#include <gtest/gtest.h>
 #include "streamvbyte.h"
+#include <gtest/gtest.h>
 
 TEST(test, streamvbyte) {
     std::size_t N = (1 << 20) + 2;

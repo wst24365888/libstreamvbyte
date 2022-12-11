@@ -79,13 +79,11 @@ PYBIND11_MODULE(libstreamvbyte, m) {
 
     m.def(
         "is_vectorized_version", []() {
-            #if defined(_MSC_VER) && defined(_M_AMD64)
-                return true;
-            #endif
-
-            #if defined(__SSSE3__)
-                return true;
-            #endif
+#if defined(_MSC_VER) && defined(_M_AMD64)
+            return true;
+#elif defined(__SSSE3__)
+            return true;
+#endif
 
             return false;
         },

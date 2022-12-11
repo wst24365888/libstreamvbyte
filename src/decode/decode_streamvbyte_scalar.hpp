@@ -2,8 +2,8 @@
 #define DECODE_SCALAR
 
 #include "branch_prediction.h"
-#include <iostream>
 #include <config.h>
+#include <iostream>
 
 #ifdef PRINT_BENCHMARK
 #include <chrono>
@@ -34,9 +34,9 @@ static inline uint32_t decode_data(uint8_t control_bits, const uint8_t** data_st
 }
 
 static void decode_scalar(uint32_t*& out, std::size_t& count, const uint8_t*& control_stream, const uint8_t*& data_stream) {
-    #ifdef PRINT_BENCHMARK
+#ifdef PRINT_BENCHMARK
     auto start = std::chrono::high_resolution_clock::now();
-    #endif
+#endif
 
     std::size_t original_count = count;
 
@@ -57,10 +57,10 @@ static void decode_scalar(uint32_t*& out, std::size_t& count, const uint8_t*& co
         --count;
     }
 
-    #ifdef PRINT_BENCHMARK
+#ifdef PRINT_BENCHMARK
     auto end = std::chrono::high_resolution_clock::now();
     std::cout << "decode_scalar: " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count() << " ns, processed " << original_count - count << " elements" << std::endl;
-    #endif
+#endif
 }
 
 #endif

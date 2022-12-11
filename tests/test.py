@@ -18,6 +18,7 @@ def test_streamvbyte():
     assert len(original_data) == len(recovered_data)
     assert np.array_equal(original_data, recovered_data)
 
+
 def test_zigzag():
     original_data = np.random.randint(-2**31, 2**31, N, dtype=np.int32)
 
@@ -31,6 +32,7 @@ def test_zigzag():
 
     assert len(original_data) == len(recovered_data)
     assert np.array_equal(original_data, recovered_data)
+
 
 def test_integrate():
     original_data = np.random.randint(-2**31, 2**31, N, dtype=np.int32)

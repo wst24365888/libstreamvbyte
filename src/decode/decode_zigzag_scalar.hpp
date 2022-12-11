@@ -2,17 +2,17 @@
 #define DECODE_ZIGZAG_SCALAR
 
 #include "branch_prediction.h"
-#include <iostream>
 #include <config.h>
+#include <iostream>
 
 #ifdef PRINT_BENCHMARK
 #include <chrono>
 #endif
 
 static void decode_zigzag_scalar(const uint32_t*& in, std::size_t& count, int32_t*& out) {
-    #ifdef PRINT_BENCHMARK
+#ifdef PRINT_BENCHMARK
     auto start = std::chrono::high_resolution_clock::now();
-    #endif
+#endif
 
     std::size_t original_count = count;
 
@@ -25,11 +25,11 @@ static void decode_zigzag_scalar(const uint32_t*& in, std::size_t& count, int32_
         ++out;
         --count;
     }
-  
-    #ifdef PRINT_BENCHMARK
+
+#ifdef PRINT_BENCHMARK
     auto end = std::chrono::high_resolution_clock::now();
     std::cout << "decode_zigzag_scalar: " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count() << " ns, processed " << original_count - count << " elements" << std::endl;
-    #endif
+#endif
 }
 
 #endif

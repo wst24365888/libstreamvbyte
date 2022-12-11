@@ -4,9 +4,7 @@
 
 #if defined(_MSC_VER) && defined(_M_AMD64)
 #include "decode_streamvbyte_ssse3.hpp"
-#endif
-
-#if defined(__SSSE3__)
+#elif defined(__SSSE3__)
 #include "decode_streamvbyte_ssse3.hpp"
 #endif
 
@@ -16,9 +14,7 @@ std::size_t streamvbyte::decode(const uint8_t* in, uint32_t* out, std::size_t co
 
 #if defined(_MSC_VER) && defined(_M_AMD64)
     decode_ssse3(out, count, control_stream, data_stream); // side effect: all arguments are modified
-#endif
-
-#if defined(__SSSE3__)
+#elif defined(__SSSE3__)
     decode_ssse3(out, count, control_stream, data_stream); // side effect: all arguments are modified
 #endif
 
