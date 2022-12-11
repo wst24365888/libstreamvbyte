@@ -11,7 +11,7 @@ def test_streamvbyte():
     assert type(compressed_bytes) == np.ndarray
     assert compressed_bytes.dtype == np.uint8
 
-    after_decode = svb.decode(compressed_bytes, len(before_encode))
+    after_decode = svb.decode(compressed_bytes, N)
     assert type(after_decode) == np.ndarray
     assert after_decode.dtype == np.uint32
 
@@ -39,7 +39,7 @@ def test_integrate():
     assert type(compressed_bytes) == np.ndarray
     assert compressed_bytes.dtype == np.uint8
 
-    after_decode = svb.decode_zigzag(svb.decode(compressed_bytes, len(before_encode)))
+    after_decode = svb.decode_zigzag(svb.decode(compressed_bytes, N))
     assert type(after_decode) == np.ndarray
     assert after_decode.dtype == np.int32
 
