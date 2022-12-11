@@ -46,9 +46,10 @@ _deps
 
 ## Others
 .vscode/
-test
+libstreamvbyte_tests
 *.pyd
 __pycache__/
 build/
 dist/
 *.egg-info/
+*.cmake

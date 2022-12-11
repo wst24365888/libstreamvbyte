@@ -55,7 +55,26 @@ elseif (BUILD_PYBIND11)
 endif()
 
 if (BUILD_TESTS)
-    add_executable(test ./tests/test.cpp)
-    target_include_directories(test PRIVATE ./include ./src)
-    target_sources(test PRIVATE ./src/encode/encode_streamvbyte.cpp ./src/decode/decode_streamvbyte.cpp ./src/encode/encode_zigzag.cpp ./src/decode/decode_zigzag.cpp)
+    enable_testing()
+
+    include(FetchContent)
+    FetchContent_Declare(
+    googletest
+    URL https://github.com/google/googletest/archive/refs/tags/release-1.12.1.zip
+    )
+    # For Windows: Prevent overriding the parent project's compiler/linker settings
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+    FetchContent_MakeAvailable(googletest)
+    
+    add_executable(libstreamvbyte_tests ./tests/test.cpp)
+    target_include_directories(libstreamvbyte_tests PRIVATE ./include ./src)
+    target_sources(libstreamvbyte_tests PRIVATE ./src/encode/encode_streamvbyte.cpp ./src/decode/decode_streamvbyte.cpp ./src/encode/encode_zigzag.cpp ./src/decode/decode_zigzag.cpp)
+
+    target_link_libraries(
+        libstreamvbyte_tests
+        GTest::gtest_main
+    )
+
+    include(GoogleTest)
+    gtest_discover_tests(libstreamvbyte_tests)
 endif()
