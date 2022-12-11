@@ -5,12 +5,19 @@
 #include "encode_shuffle_table.h"
 #include "length_table.h"
 #include "tmmintrin.h"
-#include <chrono>
 #include <iostream>
 #include <tuple>
+#include <config.h>
+
+#ifdef PRINT_BENCHMARK
+#include <chrono>
+#endif
 
 static void encode_ssse3(const uint32_t*& in, std::size_t& count, uint8_t*& control_stream, uint8_t*& data_stream) {
+    #ifdef PRINT_BENCHMARK
     auto start = std::chrono::high_resolution_clock::now();
+    #endif
+
     std::size_t original_count = count;
 
     const __m128i mask_test_byte = _mm_set1_epi8(0x11);
@@ -47,8 +54,10 @@ static void encode_ssse3(const uint32_t*& in, std::size_t& count, uint8_t*& cont
         count -= 8;
     }
 
+    #ifdef PRINT_BENCHMARK
     auto end = std::chrono::high_resolution_clock::now();
     std::cout << "encode_ssse3: " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count() << " ns, processed " << original_count - count << " elements" << std::endl;
+    #endif
 }
 
 #endif

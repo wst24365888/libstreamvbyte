@@ -2,8 +2,12 @@
 #define ENCODE_SCALAR
 
 #include "branch_prediction.h"
-#include <chrono>
 #include <iostream>
+#include <config.h>
+
+#ifdef PRINT_BENCHMARK
+#include <chrono>
+#endif
 
 static inline uint8_t encode_data(uint32_t value, uint8_t** data_stream_ptr) {
     uint8_t control_bits = (value >= (1U << 8)) + (value >= (1U << 16)) + (value >= (1U << 24));
@@ -13,7 +17,10 @@ static inline uint8_t encode_data(uint32_t value, uint8_t** data_stream_ptr) {
 }
 
 static void encode_scalar(const uint32_t*& in, std::size_t& count, uint8_t*& control_stream, uint8_t*& data_stream) {
+    #ifdef PRINT_BENCHMARK
     auto start = std::chrono::high_resolution_clock::now();
+    #endif
+
     std::size_t original_count = count;
 
     uint8_t shift = 0;
@@ -37,8 +44,11 @@ static void encode_scalar(const uint32_t*& in, std::size_t& count, uint8_t*& con
         ++control_stream;
     }
 
+
+    #ifdef PRINT_BENCHMARK
     auto end = std::chrono::high_resolution_clock::now();
     std::cout << "encode_scalar: " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count() << " ns, processed " << original_count - count << " elements" << std::endl;
+    #endif
 }
 
 #endif

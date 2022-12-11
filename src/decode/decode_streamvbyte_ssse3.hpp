@@ -5,9 +5,13 @@
 #include "decode_shuffle_table.h"
 #include "length_table.h"
 #include "tmmintrin.h"
-#include <chrono>
 #include <iostream>
 #include <tuple>
+#include <config.h>
+
+#ifdef PRINT_BENCHMARK
+#include <chrono>
+#endif
 
 static inline __m128i decode_data(uint32_t control_bits, const uint8_t** data_stream_ptr) {
     __m128i data = _mm_loadu_si128(reinterpret_cast<const __m128i*>(*data_stream_ptr));
@@ -21,7 +25,10 @@ static inline __m128i decode_data(uint32_t control_bits, const uint8_t** data_st
 }
 
 static void decode_ssse3(uint32_t*& out, std::size_t& count, const uint8_t*& control_stream, const uint8_t*& data_stream) {
+    #ifdef PRINT_BENCHMARK
     auto start = std::chrono::high_resolution_clock::now();
+    #endif
+
     std::size_t original_count = count;
 
     for (std::size_t i = 0; LIKELY(i < original_count / 8); ++i) {
@@ -38,8 +45,10 @@ static void decode_ssse3(uint32_t*& out, std::size_t& count, const uint8_t*& con
         count -= 8;
     }
 
+    #ifdef PRINT_BENCHMARK
     auto end = std::chrono::high_resolution_clock::now();
     std::cout << "decode_ssse3: " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count() << " ns, processed " << original_count - count << " elements" << std::endl;
+    #endif
 }
 
 #endif
