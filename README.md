@@ -169,7 +169,7 @@ int main() {
     std::size_t N = (1 << 20) + 2;
 
     std::vector<int32_t> original_data(N);
-    for (std::size_t i = 0; i < N; i++) {
+    for (std::size_t i = 0; i < N; ++i) {
         original_data[i] = rand() - rand();
     }
 

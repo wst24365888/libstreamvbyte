@@ -24,7 +24,7 @@ static void decode_ssse3(uint32_t*& out, std::size_t& count, const uint8_t*& con
     auto start = std::chrono::high_resolution_clock::now();
     std::size_t original_count = count;
 
-    for (std::size_t i = 0; LIKELY(i < original_count / 8); i++) {
+    for (std::size_t i = 0; LIKELY(i < original_count / 8); ++i) {
         uint32_t control_bits = *(reinterpret_cast<const uint16_t*>(control_stream));
         control_stream += 2;
 

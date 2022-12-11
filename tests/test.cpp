@@ -5,7 +5,7 @@ TEST(test, streamvbyte) {
     std::size_t N = (1 << 20) + 2;
 
     uint32_t* original_data = new uint32_t[N];
-    for (std::size_t i = 0; i < N; i++) {
+    for (std::size_t i = 0; i < N; ++i) {
         original_data[i] = rand();
     }
 
@@ -16,7 +16,7 @@ TEST(test, streamvbyte) {
     std::size_t bytes_decoded = streamvbyte::decode(compressed_bytes, recovered_data, N);
 
     ASSERT_EQ(bytes_encoded, bytes_decoded);
-    for (std::size_t i = 0; i < N; i++) {
+    for (std::size_t i = 0; i < N; ++i) {
         ASSERT_EQ(original_data[i], recovered_data[i]);
     }
 
@@ -29,7 +29,7 @@ TEST(test, zigzag) {
     std::size_t N = (1 << 20) + 2;
 
     int32_t* original_data = new int32_t[N];
-    for (std::size_t i = 0; i < N; i++) {
+    for (std::size_t i = 0; i < N; ++i) {
         original_data[i] = rand() - rand();
     }
 
@@ -39,7 +39,7 @@ TEST(test, zigzag) {
     int32_t* recovered_data = new int32_t[N];
     streamvbyte::decode_zigzag(encoded_unsigend_integers, N, recovered_data);
 
-    for (std::size_t i = 0; i < N; i++) {
+    for (std::size_t i = 0; i < N; ++i) {
         ASSERT_EQ(original_data[i], recovered_data[i]);
     }
 
@@ -52,7 +52,7 @@ TEST(test, integrated) {
     std::size_t N = (1 << 20) + 2;
 
     std::vector<int32_t> original_data(N);
-    for (std::size_t i = 0; i < N; i++) {
+    for (std::size_t i = 0; i < N; ++i) {
         original_data[i] = rand() - rand();
     }
 
@@ -60,7 +60,7 @@ TEST(test, integrated) {
     std::vector<int32_t> recovered_data = streamvbyte::decode_zigzag(streamvbyte::decode(compressed_bytes, N));
 
     ASSERT_EQ(original_data.size(), recovered_data.size());
-    for (std::size_t i = 0; i < N; i++) {
+    for (std::size_t i = 0; i < N; ++i) {
         ASSERT_EQ(original_data[i], recovered_data[i]);
     }
 }

@@ -35,10 +35,10 @@ static void decode_scalar(uint32_t*& out, std::size_t& count, const uint8_t*& co
 
     uint8_t shift = 0;
     uint32_t control_bits = *control_stream;
-    for (std::size_t i = 0; LIKELY(i < original_count); i++) {
+    for (std::size_t i = 0; LIKELY(i < original_count); ++i) {
         uint32_t value = decode_data((control_bits >> shift) & 0b11, &data_stream);
         *out = value;
-        out++;
+        ++out;
         shift += 2;
 
         if (UNLIKELY(shift == 8)) {
@@ -47,7 +47,7 @@ static void decode_scalar(uint32_t*& out, std::size_t& count, const uint8_t*& co
             control_bits = *control_stream;
         }
 
-        count--;
+        --count;
     }
 
     auto end = std::chrono::high_resolution_clock::now();
