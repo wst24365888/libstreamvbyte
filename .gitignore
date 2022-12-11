@@ -44,7 +44,7 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 
-## Others
+# Others
 .vscode/
 libstreamvbyte_tests
 *.pyd
@@ -55,3 +55,4 @@ dist/
 *.cmake
 bin/
 lib/
+wheelhouse/
