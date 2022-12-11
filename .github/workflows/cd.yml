@@ -50,7 +50,7 @@ jobs:
 
       - name: Test
         run: |
-          ./test
+          ./libstreamvbyte_tests
           poetry run python -m pytest ./tests/test.py
 
   build_sdist:
