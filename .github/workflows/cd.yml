@@ -45,7 +45,7 @@ jobs:
 
       - name: Build
         run: |
-          cmake . -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_PYBIND11=ON -DBUILD_TESTS=ON
+          cmake . -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_PYBIND11=ON -DBUILD_TESTS=ON -DPRINT_BENCHMARK=ON
           cmake --build . --config Release
 
       - name: Test

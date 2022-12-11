@@ -42,6 +42,7 @@ class CMakeBuild(build_ext):
             f"-DBUILD_SHARED_LIBS=OFF",
             f"-DBUILD_PYBIND11=ON",
             f"-DBUILD_TESTS=OFF",
+            f"-DPRINT_BENCHMARK=OFF",
             f"-DCMAKE_LIBRARY_OUTPUT_DIRECTORY={ext_dir}",
             f"-DPYTHON_EXECUTABLE={sys.executable}",
             f"-DCMAKE_BUILD_TYPE={cfg}",
