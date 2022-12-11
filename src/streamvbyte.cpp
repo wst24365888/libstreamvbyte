@@ -76,4 +76,18 @@ PYBIND11_MODULE(libstreamvbyte, m) {
             return out;
         },
         "Decode an array of unsigned integers into an array of signed integers.");
+
+    m.def(
+        "is_vectorized_version", []() {
+            #if defined(_MSC_VER) && defined(_M_AMD64)
+                return true;
+            #endif
+
+            #if defined(__SSSE3__)
+                return true;
+            #endif
+
+            return false;
+        },
+        "Check if the version of current wheel is vectorized.");
 }
