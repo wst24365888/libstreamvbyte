@@ -6,7 +6,7 @@ static void BM_streamvbyte_encode(benchmark::State& state) {
 
     uint32_t* original_data = new uint32_t[N];
     for (std::size_t i = 0; i < N; ++i) {
-        original_data[i] = rand();
+        original_data[i] = rand() >> (rand() & 0b11111);
     }
 
     uint8_t* compressed_bytes = new uint8_t[streamvbyte::max_compressed_size(N)];
@@ -26,7 +26,7 @@ static void BM_streamvbyte_decode(benchmark::State& state) {
 
     uint32_t* original_data = new uint32_t[N];
     for (std::size_t i = 0; i < N; ++i) {
-        original_data[i] = rand();
+        original_data[i] = rand() >> (rand() & 0b11111);
     }
 
     uint8_t* compressed_bytes = new uint8_t[streamvbyte::max_compressed_size(N)];
@@ -50,7 +50,7 @@ static void BM_streamvbyte_encode_zigzag(benchmark::State& state) {
 
     int32_t* original_data = new int32_t[N];
     for (std::size_t i = 0; i < N; ++i) {
-        original_data[i] = rand() - rand();
+        original_data[i] = (rand() - rand()) >> (rand() & 0b11111);
     }
 
     uint32_t* encoded_unsigend_integers = new uint32_t[N];
@@ -70,7 +70,7 @@ static void BM_streamvbyte_decode_zigzag(benchmark::State& state) {
 
     int32_t* original_data = new int32_t[N];
     for (std::size_t i = 0; i < N; ++i) {
-        original_data[i] = rand() - rand();
+        original_data[i] = (rand() - rand()) >> (rand() & 0b11111);
     }
 
     uint32_t* encoded_unsigend_integers = new uint32_t[N];
