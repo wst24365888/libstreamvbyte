@@ -66,7 +66,7 @@ static void BM_streamvbyte_decode(benchmark::State& state) {
     delete[] recovered_data;
 }
 
-static void BM_streamvbyte_zigzag_encode(benchmark::State& state) {
+static void BM_zigzag_encode(benchmark::State& state) {
     std::size_t N = state.range(0);
 
     int32_t* original_data = new int32_t[N];
@@ -86,7 +86,7 @@ static void BM_streamvbyte_zigzag_encode(benchmark::State& state) {
     delete[] encoded_unsigend_integers;
 }
 
-static void BM_streamvbyte_zigzag_decode(benchmark::State& state) {
+static void BM_zigzag_decode(benchmark::State& state) {
     std::size_t N = state.range(0);
 
     int32_t* original_data = new int32_t[N];
@@ -113,7 +113,7 @@ static void BM_streamvbyte_zigzag_decode(benchmark::State& state) {
 BENCHMARK(BM_memcpy)->RangeMultiplier(2)->Range(1 << 12, 1 << 20);
 BENCHMARK(BM_streamvbyte_encode)->RangeMultiplier(2)->Range(1 << 12, 1 << 20);
 BENCHMARK(BM_streamvbyte_decode)->RangeMultiplier(2)->Range(1 << 12, 1 << 20);
-BENCHMARK(BM_streamvbyte_zigzag_encode)->RangeMultiplier(2)->Range(1 << 12, 1 << 20);
-BENCHMARK(BM_streamvbyte_zigzag_decode)->RangeMultiplier(2)->Range(1 << 12, 1 << 20);
+BENCHMARK(BM_zigzag_encode)->RangeMultiplier(2)->Range(1 << 12, 1 << 20);
+BENCHMARK(BM_zigzag_decode)->RangeMultiplier(2)->Range(1 << 12, 1 << 20);
 
 BENCHMARK_MAIN();
