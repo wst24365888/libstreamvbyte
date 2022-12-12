@@ -32,7 +32,7 @@ set(CMAKE_CXX_FLAGS "-Wall -std=c++17 -O3 ${ARCH_EXTENSION}")
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 
 if (BUILD_SHARED_LIBS)    
-    add_library(streamvbyte ${CMAKE_CURRENT_SOURCE_DIR}/src/encode/encode_streamvbyte.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/decode/decode_streamvbyte.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/encode/encode_zigzag.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/decode/decode_zigzag.cpp)
+    add_library(streamvbyte ${CMAKE_CURRENT_SOURCE_DIR}/src/encode/streamvbyte_encode.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/decode/streamvbyte_decode.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/encode/zigzag_encode.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/decode/zigzag_decode.cpp)
     target_compile_definitions(streamvbyte PRIVATE VERSION_INFO=${PROJECT_VERSION})
 
     target_include_directories(streamvbyte PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_SOURCE_DIR}/src)
@@ -53,7 +53,7 @@ elseif (BUILD_PYBIND11)
     target_compile_definitions(libstreamvbyte PRIVATE VERSION_INFO=${PROJECT_VERSION})
 
     target_include_directories(libstreamvbyte PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_SOURCE_DIR}/src)
-    target_sources(libstreamvbyte PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/encode/encode_streamvbyte.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/decode/decode_streamvbyte.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/encode/encode_zigzag.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/decode/decode_zigzag.cpp)
+    target_sources(libstreamvbyte PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/encode/streamvbyte_encode.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/decode/streamvbyte_decode.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/encode/zigzag_encode.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/decode/zigzag_decode.cpp)
 
     set_property(TARGET libstreamvbyte PROPERTY POSITION_INDEPENDENT_CODE ON)
 endif()
@@ -72,7 +72,7 @@ if (BUILD_TESTS)
     
     add_executable(libstreamvbyte_tests ${CMAKE_CURRENT_SOURCE_DIR}/tests/test.cpp)
     target_include_directories(libstreamvbyte_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_SOURCE_DIR}/src)
-    target_sources(libstreamvbyte_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/encode/encode_streamvbyte.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/decode/decode_streamvbyte.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/encode/encode_zigzag.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/decode/decode_zigzag.cpp)
+    target_sources(libstreamvbyte_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/encode/streamvbyte_encode.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/decode/streamvbyte_decode.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/encode/zigzag_encode.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/decode/zigzag_decode.cpp)
 
     target_link_libraries(
         libstreamvbyte_tests
@@ -98,7 +98,7 @@ if (BUILD_BENCHMARKS)
 
     add_executable(libstreamvbyte_benchmarks ${CMAKE_CURRENT_SOURCE_DIR}/benchmarks/benchmark.cpp)
     target_include_directories(libstreamvbyte_benchmarks PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_SOURCE_DIR}/src)
-    target_sources(libstreamvbyte_benchmarks PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/encode/encode_streamvbyte.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/decode/decode_streamvbyte.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/encode/encode_zigzag.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/decode/decode_zigzag.cpp)
+    target_sources(libstreamvbyte_benchmarks PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/encode/streamvbyte_encode.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/decode/streamvbyte_decode.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/encode/zigzag_encode.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/decode/zigzag_decode.cpp)
 
     target_link_libraries(
         libstreamvbyte_benchmarks

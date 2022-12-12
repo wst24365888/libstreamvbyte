@@ -44,7 +44,7 @@ PYBIND11_MODULE(libstreamvbyte, m) {
         "Decode a byte array into an array of unsigned integers.");
 
     m.def(
-        "encode_zigzag", [](py::array_t<int32_t> in) {
+        "zigzag_encode", [](py::array_t<int32_t> in) {
             py::buffer_info in_buf = in.request();
 
             if (in_buf.ndim != 1) {
@@ -54,14 +54,14 @@ PYBIND11_MODULE(libstreamvbyte, m) {
             auto out = py::array_t<uint32_t>(in_buf.size);
             py::buffer_info out_buf = out.request();
 
-            streamvbyte::encode_zigzag(reinterpret_cast<int32_t*>(in_buf.ptr), in_buf.size, reinterpret_cast<uint32_t*>(out_buf.ptr));
+            streamvbyte::zigzag_encode(reinterpret_cast<int32_t*>(in_buf.ptr), in_buf.size, reinterpret_cast<uint32_t*>(out_buf.ptr));
 
             return out;
         },
         "Encode an array of signed integers into an array of unsigned integers.");
 
     m.def(
-        "decode_zigzag", [](py::array_t<uint32_t> in) {
+        "zigzag_decode", [](py::array_t<uint32_t> in) {
             py::buffer_info in_buf = in.request();
 
             if (in_buf.ndim != 1) {
@@ -71,7 +71,7 @@ PYBIND11_MODULE(libstreamvbyte, m) {
             auto out = py::array_t<int32_t>(in_buf.size);
             py::buffer_info out_buf = out.request();
 
-            streamvbyte::decode_zigzag(reinterpret_cast<uint32_t*>(in_buf.ptr), in_buf.size, reinterpret_cast<int32_t*>(out_buf.ptr));
+            streamvbyte::zigzag_decode(reinterpret_cast<uint32_t*>(in_buf.ptr), in_buf.size, reinterpret_cast<int32_t*>(out_buf.ptr));
 
             return out;
         },

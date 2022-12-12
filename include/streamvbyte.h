@@ -63,7 +63,7 @@ static inline size_t max_compressed_size(const uint32_t size) {
     @param count: the number of signed integers to encode
     @param out: a sequence of 32-bit unsigned integers
 */
-void encode_zigzag(const int32_t* in, std::size_t count, uint32_t* out);
+void zigzag_encode(const int32_t* in, std::size_t count, uint32_t* out);
 
 /*
     Encode a vector of 32-bit signed integers to a vector of 32-bit unsigned integers.
@@ -72,7 +72,7 @@ void encode_zigzag(const int32_t* in, std::size_t count, uint32_t* out);
 
     @return a vector of 32-bit unsigned integers
 */
-std::vector<uint32_t> encode_zigzag(const std::vector<int32_t>& in);
+std::vector<uint32_t> zigzag_encode(const std::vector<int32_t>& in);
 
 /*
     Decode a sequence of 32-bit unsigned integers to a sequence of 32-bit signed integers.
@@ -81,7 +81,7 @@ std::vector<uint32_t> encode_zigzag(const std::vector<int32_t>& in);
     @param count: the number of unsigned integers to decode
     @param out: a sequence of 32-bit signed integers
 */
-void decode_zigzag(const uint32_t* in, std::size_t count, int32_t* out);
+void zigzag_decode(const uint32_t* in, std::size_t count, int32_t* out);
 
 /*
     Decode a vector of 32-bit unsigned integers to a vector of 32-bit signed integers.
@@ -90,5 +90,5 @@ void decode_zigzag(const uint32_t* in, std::size_t count, int32_t* out);
 
     @return a vector of 32-bit signed integers
 */
-std::vector<int32_t> decode_zigzag(const std::vector<uint32_t>& in);
+std::vector<int32_t> zigzag_decode(const std::vector<uint32_t>& in);
 }

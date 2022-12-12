@@ -45,7 +45,7 @@ static void BM_streamvbyte_decode(benchmark::State& state) {
     delete[] recovered_data;
 }
 
-static void BM_streamvbyte_encode_zigzag(benchmark::State& state) {
+static void BM_streamvbyte_zigzag_encode(benchmark::State& state) {
     std::size_t N = state.range(0);
 
     int32_t* original_data = new int32_t[N];
@@ -56,7 +56,7 @@ static void BM_streamvbyte_encode_zigzag(benchmark::State& state) {
     uint32_t* encoded_unsigend_integers = new uint32_t[N];
 
     for (auto _ : state) {
-        streamvbyte::encode_zigzag(original_data, N, encoded_unsigend_integers);
+        streamvbyte::zigzag_encode(original_data, N, encoded_unsigend_integers);
     }
 
     state.counters["Throughput"] = benchmark::Counter(int64_t(state.iterations()) * int64_t(N) * int64_t(sizeof(uint32_t)), benchmark::Counter::kIsRate);
@@ -65,7 +65,7 @@ static void BM_streamvbyte_encode_zigzag(benchmark::State& state) {
     delete[] encoded_unsigend_integers;
 }
 
-static void BM_streamvbyte_decode_zigzag(benchmark::State& state) {
+static void BM_streamvbyte_zigzag_decode(benchmark::State& state) {
     std::size_t N = state.range(0);
 
     int32_t* original_data = new int32_t[N];
@@ -74,12 +74,12 @@ static void BM_streamvbyte_decode_zigzag(benchmark::State& state) {
     }
 
     uint32_t* encoded_unsigend_integers = new uint32_t[N];
-    streamvbyte::encode_zigzag(original_data, N, encoded_unsigend_integers);
+    streamvbyte::zigzag_encode(original_data, N, encoded_unsigend_integers);
 
     int32_t* recovered_data = new int32_t[N];
 
     for (auto _ : state) {
-        streamvbyte::decode_zigzag(encoded_unsigend_integers, N, recovered_data);
+        streamvbyte::zigzag_decode(encoded_unsigend_integers, N, recovered_data);
     }
 
     state.counters["Throughput"] = benchmark::Counter(int64_t(state.iterations()) * int64_t(N) * int64_t(sizeof(uint32_t)), benchmark::Counter::kIsRate);
@@ -91,7 +91,7 @@ static void BM_streamvbyte_decode_zigzag(benchmark::State& state) {
 
 BENCHMARK(BM_streamvbyte_encode)->RangeMultiplier(10)->Range(1e6, 1e9)->MinTime(10);
 BENCHMARK(BM_streamvbyte_decode)->RangeMultiplier(10)->Range(1e6, 1e9)->MinTime(10);
-BENCHMARK(BM_streamvbyte_encode_zigzag)->RangeMultiplier(10)->Range(1e6, 1e9)->MinTime(10);
-BENCHMARK(BM_streamvbyte_decode_zigzag)->RangeMultiplier(10)->Range(1e6, 1e9)->MinTime(10);
+BENCHMARK(BM_streamvbyte_zigzag_encode)->RangeMultiplier(10)->Range(1e6, 1e9)->MinTime(10);
+BENCHMARK(BM_streamvbyte_zigzag_decode)->RangeMultiplier(10)->Range(1e6, 1e9)->MinTime(10);
 
 BENCHMARK_MAIN();

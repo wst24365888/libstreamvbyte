@@ -123,10 +123,10 @@ encode(arg0: numpy.ndarray[numpy.uint32]) -> numpy.ndarray[numpy.uint8]
 decode(arg0: numpy.ndarray[numpy.uint8], arg1: int) -> numpy.ndarray[numpy.uint32]
 
 # Encode an array of signed integers into an array of unsigned integers.
-encode_zigzag(arg0: numpy.ndarray[numpy.int32]) -> numpy.ndarray[numpy.uint32]
+zigzag_encode(arg0: numpy.ndarray[numpy.int32]) -> numpy.ndarray[numpy.uint32]
 
 # Decode an array of unsigned integers into an array of signed integers.
-decode_zigzag(arg0: numpy.ndarray[numpy.uint32]) -> numpy.ndarray[numpy.int32]
+zigzag_decode(arg0: numpy.ndarray[numpy.uint32]) -> numpy.ndarray[numpy.int32]
 
 # Check if the current wheel is a vectorized version.
 is_vectorized_version() -> bool
@@ -157,11 +157,11 @@ original_data = np.random.randint(-2**31, 2**31, N, dtype=np.int32)
 
 # type(compressed_bytes) == np.ndarray
 # compressed_bytes.dtype == np.uint8
-compressed_bytes = svb.encode(svb.encode_zigzag(original_data))
+compressed_bytes = svb.encode(svb.zigzag_encode(original_data))
 
 # type(recovered_data) == np.ndarray
 # recovered_data.dtype == np.int32
-recovered_data = svb.decode_zigzag(svb.decode(compressed_bytes, N))
+recovered_data = svb.zigzag_decode(svb.decode(compressed_bytes, N))
 ```
 
 #### For `C++`
@@ -177,8 +177,8 @@ int main() {
         original_data[i] = rand() - rand();
     }
 
-    std::vector<uint8_t> compressed_bytes = streamvbyte::encode(streamvbyte::encode_zigzag(original_data));
-    std::vector<int32_t> recovered_data = streamvbyte::decode_zigzag(streamvbyte::decode(compressed_bytes, N));
+    std::vector<uint8_t> compressed_bytes = streamvbyte::encode(streamvbyte::zigzag_encode(original_data));
+    std::vector<int32_t> recovered_data = streamvbyte::zigzag_decode(streamvbyte::decode(compressed_bytes, N));
 
     return 0;
 }
@@ -218,14 +218,14 @@ BM_streamvbyte_decode/1000000/min_time:10.000               176918 ns       1768
 BM_streamvbyte_decode/10000000/min_time:10.000             3460414 ns      3460293 ns         4059 11.5597G/s
 BM_streamvbyte_decode/100000000/min_time:10.000           35830694 ns     35830178 ns          399 11.1638G/s
 BM_streamvbyte_decode/1000000000/min_time:10.000         395000967 ns    394998152 ns           29 10.1266G/s
-BM_streamvbyte_encode_zigzag/1000000/min_time:10.000        198481 ns       198481 ns        71648 20.1531G/s
-BM_streamvbyte_encode_zigzag/10000000/min_time:10.000      3905349 ns      3905318 ns         3699 10.2424G/s
-BM_streamvbyte_encode_zigzag/100000000/min_time:10.000    38865616 ns     38865483 ns          367 10.2919G/s
-BM_streamvbyte_encode_zigzag/1000000000/min_time:10.000  431700632 ns    431698141 ns           29 9.26573G/s
-BM_streamvbyte_decode_zigzag/1000000/min_time:10.000        201529 ns       201529 ns        71350 19.8483G/s
-BM_streamvbyte_decode_zigzag/10000000/min_time:10.000      3740073 ns      3739945 ns         3328 10.6953G/s
-BM_streamvbyte_decode_zigzag/100000000/min_time:10.000    41444965 ns     41444779 ns          332  9.6514G/s
-BM_streamvbyte_decode_zigzag/1000000000/min_time:10.000  416964668 ns    416963581 ns           32 9.59316G/s
+BM_streamvbyte_zigzag_encode/1000000/min_time:10.000        198481 ns       198481 ns        71648 20.1531G/s
+BM_streamvbyte_zigzag_encode/10000000/min_time:10.000      3905349 ns      3905318 ns         3699 10.2424G/s
+BM_streamvbyte_zigzag_encode/100000000/min_time:10.000    38865616 ns     38865483 ns          367 10.2919G/s
+BM_streamvbyte_zigzag_encode/1000000000/min_time:10.000  431700632 ns    431698141 ns           29 9.26573G/s
+BM_streamvbyte_zigzag_decode/1000000/min_time:10.000        201529 ns       201529 ns        71350 19.8483G/s
+BM_streamvbyte_zigzag_decode/10000000/min_time:10.000      3740073 ns      3739945 ns         3328 10.6953G/s
+BM_streamvbyte_zigzag_decode/100000000/min_time:10.000    41444965 ns     41444779 ns          332  9.6514G/s
+BM_streamvbyte_zigzag_decode/1000000000/min_time:10.000  416964668 ns    416963581 ns           32 9.59316G/s
 ```
 
 ### Build Benchmarks from Source

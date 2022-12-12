@@ -34,10 +34,10 @@ TEST(test, zigzag) {
     }
 
     uint32_t* encoded_unsigend_integers = new uint32_t[N];
-    streamvbyte::encode_zigzag(original_data, N, encoded_unsigend_integers);
+    streamvbyte::zigzag_encode(original_data, N, encoded_unsigend_integers);
 
     int32_t* recovered_data = new int32_t[N];
-    streamvbyte::decode_zigzag(encoded_unsigend_integers, N, recovered_data);
+    streamvbyte::zigzag_decode(encoded_unsigend_integers, N, recovered_data);
 
     for (std::size_t i = 0; i < N; ++i) {
         ASSERT_EQ(original_data[i], recovered_data[i]);
@@ -56,8 +56,8 @@ TEST(test, integrated) {
         original_data[i] = rand() - rand();
     }
 
-    std::vector<uint8_t> compressed_bytes = streamvbyte::encode(streamvbyte::encode_zigzag(original_data));
-    std::vector<int32_t> recovered_data = streamvbyte::decode_zigzag(streamvbyte::decode(compressed_bytes, N));
+    std::vector<uint8_t> compressed_bytes = streamvbyte::encode(streamvbyte::zigzag_encode(original_data));
+    std::vector<int32_t> recovered_data = streamvbyte::zigzag_decode(streamvbyte::decode(compressed_bytes, N));
 
     ASSERT_EQ(original_data.size(), recovered_data.size());
     for (std::size_t i = 0; i < N; ++i) {
