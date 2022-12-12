@@ -81,9 +81,13 @@ static void BM_streamvbyte_decode_zigzag(benchmark::State& state) {
     delete[] recovered_data;
 }
 
-BENCHMARK(BM_streamvbyte_encode)->RangeMultiplier(2)->Range(1 << 10, 1 << 20);
-BENCHMARK(BM_streamvbyte_decode)->RangeMultiplier(2)->Range(1 << 10, 1 << 20);
-BENCHMARK(BM_streamvbyte_encode_zigzag)->RangeMultiplier(2)->Range(1 << 10, 1 << 20);
-BENCHMARK(BM_streamvbyte_decode_zigzag)->RangeMultiplier(2)->Range(1 << 10, 1 << 20);
+BENCHMARK(BM_streamvbyte_encode)->Range(1 << 20, 1 << 20);
+BENCHMARK(BM_streamvbyte_encode)->Range(1 << 30, 1 << 30)->Iterations(100);
+BENCHMARK(BM_streamvbyte_decode)->Range(1 << 20, 1 << 20);
+BENCHMARK(BM_streamvbyte_decode)->Range(1 << 30, 1 << 30)->Iterations(100);
+BENCHMARK(BM_streamvbyte_encode_zigzag)->Range(1 << 20, 1 << 20);
+BENCHMARK(BM_streamvbyte_encode_zigzag)->Range(1 << 30, 1 << 30)->Iterations(100);
+BENCHMARK(BM_streamvbyte_decode_zigzag)->Range(1 << 20, 1 << 20);
+BENCHMARK(BM_streamvbyte_decode_zigzag)->Range(1 << 30, 1 << 30)->Iterations(100);
 
 BENCHMARK_MAIN();
