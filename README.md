@@ -43,6 +43,7 @@
         <li><a href="#example">Example</a></li>
       </ul>
     </li>
+    <li><a href="#benchmark">Benchmark</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
@@ -187,6 +188,58 @@ Compile it with linking to `libstreamvbyte`.
 
 ```bash
 g++ -o example example.cpp -lstreamvbyte
+```
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+<!-- BENCHMARK -->
+
+## Benchmark
+
+```bash
+OS: Linux 5.15.79.1-microsoft-standard-WSL2 x86_64
+CPU: AMD Ryzen 5 3600 6-Core Processor (12) @ 3.600GHz
+
+Run on (12 X 3593.26 MHz CPU s)
+CPU Caches:
+  L1 Data 32 KiB (x6)
+  L1 Instruction 32 KiB (x6)
+  L2 Unified 512 KiB (x6)
+  L3 Unified 16384 KiB (x1)
+Load Average: 0.62, 0.90, 0.90
+-------------------------------------------------------------------------------------------------------------
+Benchmark                                                        Time             CPU   Iterations Throughput
+-------------------------------------------------------------------------------------------------------------
+BM_streamvbyte_encode/1000000/min_time:10.000               427609 ns       427609 ns        35964 9.35434G/s
+BM_streamvbyte_encode/10000000/min_time:10.000             4387786 ns      4387691 ns         3262 9.11641G/s
+BM_streamvbyte_encode/100000000/min_time:10.000           45285441 ns     45285378 ns          278 8.83287G/s
+BM_streamvbyte_encode/1000000000/min_time:10.000         482895663 ns    482894996 ns           27 8.28337G/s
+BM_streamvbyte_decode/1000000/min_time:10.000               176918 ns       176807 ns        81674 22.6235G/s
+BM_streamvbyte_decode/10000000/min_time:10.000             3460414 ns      3460293 ns         4059 11.5597G/s
+BM_streamvbyte_decode/100000000/min_time:10.000           35830694 ns     35830178 ns          399 11.1638G/s
+BM_streamvbyte_decode/1000000000/min_time:10.000         395000967 ns    394998152 ns           29 10.1266G/s
+BM_streamvbyte_encode_zigzag/1000000/min_time:10.000        198481 ns       198481 ns        71648 20.1531G/s
+BM_streamvbyte_encode_zigzag/10000000/min_time:10.000      3905349 ns      3905318 ns         3699 10.2424G/s
+BM_streamvbyte_encode_zigzag/100000000/min_time:10.000    38865616 ns     38865483 ns          367 10.2919G/s
+BM_streamvbyte_encode_zigzag/1000000000/min_time:10.000  431700632 ns    431698141 ns           29 9.26573G/s
+BM_streamvbyte_decode_zigzag/1000000/min_time:10.000        201529 ns       201529 ns        71350 19.8483G/s
+BM_streamvbyte_decode_zigzag/10000000/min_time:10.000      3740073 ns      3739945 ns         3328 10.6953G/s
+BM_streamvbyte_decode_zigzag/100000000/min_time:10.000    41444965 ns     41444779 ns          332  9.6514G/s
+BM_streamvbyte_decode_zigzag/1000000000/min_time:10.000  416964668 ns    416963581 ns           32 9.59316G/s
+```
+
+### Build Benchmarks from Source
+
+```bash
+cmake . \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DBUILD_SHARED_LIBS=OFF \
+    -DBUILD_PYBIND11=OFF \
+    -DPRINT_BENCHMARK=OFF \
+    -DBUILD_TESTS=ON \
+    -DBUILD_BENCHMARKS=ON
+make libstreamvbyte_benchmarks
+./libstreamvbyte_benchmarks --benchmark_counters_tabular=true
 ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
