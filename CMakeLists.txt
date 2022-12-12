@@ -18,8 +18,9 @@ endif()
 
 option(BUILD_SHARED_LIBS "Build shared libraries." ON)
 option(BUILD_PYBIND11 "Build pybind11." OFF)
-option(BUILD_TESTS "Build tests." OFF)
 option(PRINT_BENCHMARK "Print benchmark." OFF)
+option(BUILD_TESTS "Build tests." OFF)
+option(BUILD_BENCHMARKS "Build benchmark." OFF)
 
 if (BUILD_PYBIND11 AND BUILD_SHARED_LIBS)
     message(FATAL_ERROR "BUILD_PYBIND11 and BUILD_SHARED_LIBS are mutually exclusive.")
@@ -80,4 +81,27 @@ if (BUILD_TESTS)
 
     include(GoogleTest)
     gtest_discover_tests(libstreamvbyte_tests)
+endif()
+
+if (NOT BUILD_TESTS AND BUILD_BENCHMARKS)
+    message(FATAL_ERROR "BUILD_TESTS must be enabled to build benchmarks.")
+endif()
+
+if (BUILD_BENCHMARKS)
+    include(FetchContent)
+    FetchContent_Declare(
+    googlebenchmark
+    URL https://github.com/google/benchmark/archive/refs/tags/v1.7.1.zip
+    )
+
+    FetchContent_MakeAvailable(googlebenchmark)
+
+    add_executable(libstreamvbyte_benchmarks ${CMAKE_CURRENT_SOURCE_DIR}/benchmarks/benchmark.cpp)
+    target_include_directories(libstreamvbyte_benchmarks PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_SOURCE_DIR}/src)
+    target_sources(libstreamvbyte_benchmarks PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/encode/encode_streamvbyte.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/decode/decode_streamvbyte.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/encode/encode_zigzag.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/decode/decode_zigzag.cpp)
+
+    target_link_libraries(
+        libstreamvbyte_benchmarks
+        benchmark::benchmark
+    )
 endif()

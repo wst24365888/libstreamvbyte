@@ -46,7 +46,6 @@ _deps
 
 # Others
 .vscode/
-libstreamvbyte_tests
 *.pyd
 __pycache__/
 build/
@@ -57,3 +56,5 @@ bin/
 lib/
 wheelhouse/
 config.h
+libstreamvbyte_tests
+libstreamvbyte_benchmarks
