@@ -41,10 +41,14 @@ jobs:
 
       - name: Build
         run: |
-          cmake . -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_PYBIND11=ON -DBUILD_TESTS=ON -DPRINT_BENCHMARK=ON
+          cmake . -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_PYBIND11=ON -DPRINT_BENCHMARK=ON -DBUILD_TESTS=ON -DBUILD_BENCHMARKS=ON
           cmake --build . --config Release
 
       - name: Test
         run: |
           ./libstreamvbyte_tests
           poetry run python -m pytest ./tests/test.py
+
+      - name: Benchmark
+        run: |
+          ./libstreamvbyte_benchmarks
