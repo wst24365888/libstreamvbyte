@@ -207,54 +207,54 @@ CPU Caches:
   L2 Unified 512 KiB (x6)
   L3 Unified 16384 KiB (x1)
 Load Average: 0.81, 0.85, 0.69
-------------------------------------------------------------------------------------------
-Benchmark                                     Time             CPU   Iterations Throughput
-------------------------------------------------------------------------------------------
-BM_memcpy/4096                              149 ns          149 ns      4688531 13.7122G/s
-BM_memcpy/8192                              548 ns          548 ns      1275803 7.46783G/s
-BM_memcpy/16384                            1139 ns         1138 ns       640835 7.19553G/s
-BM_memcpy/32768                            2185 ns         2185 ns       320840 7.49932G/s
-BM_memcpy/65536                            4921 ns         4921 ns       142703 6.65895G/s
-BM_memcpy/131072                          10968 ns        10968 ns        63502 5.97511G/s
-BM_memcpy/262144                          22465 ns        22465 ns        31134 5.83457G/s
-BM_memcpy/524288                          45101 ns        45100 ns        15541 5.81245G/s
-BM_memcpy/1048576                         91131 ns        91131 ns         7639 5.75314G/s
-BM_streamvbyte_encode/4096                 1222 ns         1222 ns       580855 1.67556G/s
-BM_streamvbyte_encode/8192                 2470 ns         2467 ns       282349 1.66064G/s
-BM_streamvbyte_encode/16384                4945 ns         4945 ns       139671 1.65662G/s
-BM_streamvbyte_encode/32768                9990 ns         9989 ns        70497 1.64017G/s
-BM_streamvbyte_encode/65536               19853 ns        19853 ns        30963 1.65051G/s
-BM_streamvbyte_encode/131072              39933 ns        39932 ns        17401 1.64118G/s
-BM_streamvbyte_encode/262144              80563 ns        80562 ns         8193 1.62697G/s
-BM_streamvbyte_encode/524288             160716 ns       160716 ns         4284  1.6311G/s
-BM_streamvbyte_encode/1048576            319253 ns       319253 ns         1942 1.64223G/s
-BM_streamvbyte_decode/4096                  691 ns          691 ns      1040462 2.96191G/s
-BM_streamvbyte_decode/8192                 1341 ns         1341 ns       516979 3.05539G/s
-BM_streamvbyte_decode/16384                2683 ns         2683 ns       261208 3.05359G/s
-BM_streamvbyte_decode/32768                5348 ns         5348 ns       130319 3.06353G/s
-BM_streamvbyte_decode/65536               10817 ns        10817 ns        64427 3.02936G/s
-BM_streamvbyte_decode/131072              23207 ns        23207 ns        31546   2.824G/s
-BM_streamvbyte_decode/262144              45746 ns        45746 ns        11291 2.86519G/s
-BM_streamvbyte_decode/524288              88660 ns        88660 ns         7947 2.95673G/s
-BM_streamvbyte_decode/1048576            178497 ns       178497 ns         3907 2.93724G/s
-BM_zigzag_encode/4096           810 ns          810 ns       854076 2.52829G/s
-BM_zigzag_encode/8192          1611 ns         1608 ns       433154   2.548G/s
-BM_zigzag_encode/16384         3174 ns         3174 ns       219165 2.58084G/s
-BM_zigzag_encode/32768         6457 ns         6457 ns       108415 2.53754G/s
-BM_zigzag_encode/65536        12582 ns        12582 ns        54747 2.60432G/s
-BM_zigzag_encode/131072       25243 ns        25243 ns        27802 2.59617G/s
-BM_zigzag_encode/262144       50278 ns        50278 ns        13952 2.60693G/s
-BM_zigzag_encode/524288      100563 ns       100562 ns         6932 2.60678G/s
-BM_zigzag_encode/1048576     211846 ns       211845 ns         3222 2.47487G/s
-BM_zigzag_decode/4096           675 ns          675 ns      1041044 3.03263G/s
-BM_zigzag_decode/8192          1342 ns         1342 ns       523553 3.05196G/s
-BM_zigzag_decode/16384         2643 ns         2643 ns       265497 3.09905G/s
-BM_zigzag_decode/32768         5383 ns         5383 ns       130976 3.04377G/s
-BM_zigzag_decode/65536        11474 ns        11474 ns        60817 2.85588G/s
-BM_zigzag_decode/131072       21777 ns        21777 ns        32345 3.00944G/s
-BM_zigzag_decode/262144       43477 ns        43478 ns        14387  3.0147G/s
-BM_zigzag_decode/524288       86120 ns        86120 ns         8145 3.04393G/s
-BM_zigzag_decode/1048576     173095 ns       173093 ns         4028 3.02894G/s
+-----------------------------------------------------------------------------------
+Benchmark                              Time             CPU   Iterations Throughput
+-----------------------------------------------------------------------------------
+BM_memcpy/4096                       149 ns          149 ns      4688531 13.7122G/s
+BM_memcpy/8192                       548 ns          548 ns      1275803 7.46783G/s
+BM_memcpy/16384                     1139 ns         1138 ns       640835 7.19553G/s
+BM_memcpy/32768                     2185 ns         2185 ns       320840 7.49932G/s
+BM_memcpy/65536                     4921 ns         4921 ns       142703 6.65895G/s
+BM_memcpy/131072                   10968 ns        10968 ns        63502 5.97511G/s
+BM_memcpy/262144                   22465 ns        22465 ns        31134 5.83457G/s
+BM_memcpy/524288                   45101 ns        45100 ns        15541 5.81245G/s
+BM_memcpy/1048576                  91131 ns        91131 ns         7639 5.75314G/s
+BM_streamvbyte_encode/4096          1222 ns         1222 ns       580855 1.67556G/s
+BM_streamvbyte_encode/8192          2470 ns         2467 ns       282349 1.66064G/s
+BM_streamvbyte_encode/16384         4945 ns         4945 ns       139671 1.65662G/s
+BM_streamvbyte_encode/32768         9990 ns         9989 ns        70497 1.64017G/s
+BM_streamvbyte_encode/65536        19853 ns        19853 ns        30963 1.65051G/s
+BM_streamvbyte_encode/131072       39933 ns        39932 ns        17401 1.64118G/s
+BM_streamvbyte_encode/262144       80563 ns        80562 ns         8193 1.62697G/s
+BM_streamvbyte_encode/524288      160716 ns       160716 ns         4284  1.6311G/s
+BM_streamvbyte_encode/1048576     319253 ns       319253 ns         1942 1.64223G/s
+BM_streamvbyte_decode/4096           691 ns          691 ns      1040462 2.96191G/s
+BM_streamvbyte_decode/8192          1341 ns         1341 ns       516979 3.05539G/s
+BM_streamvbyte_decode/16384         2683 ns         2683 ns       261208 3.05359G/s
+BM_streamvbyte_decode/32768         5348 ns         5348 ns       130319 3.06353G/s
+BM_streamvbyte_decode/65536        10817 ns        10817 ns        64427 3.02936G/s
+BM_streamvbyte_decode/131072       23207 ns        23207 ns        31546   2.824G/s
+BM_streamvbyte_decode/262144       45746 ns        45746 ns        11291 2.86519G/s
+BM_streamvbyte_decode/524288       88660 ns        88660 ns         7947 2.95673G/s
+BM_streamvbyte_decode/1048576     178497 ns       178497 ns         3907 2.93724G/s
+BM_zigzag_encode/4096                810 ns          810 ns       854076 2.52829G/s
+BM_zigzag_encode/8192               1611 ns         1608 ns       433154   2.548G/s
+BM_zigzag_encode/16384              3174 ns         3174 ns       219165 2.58084G/s
+BM_zigzag_encode/32768              6457 ns         6457 ns       108415 2.53754G/s
+BM_zigzag_encode/65536             12582 ns        12582 ns        54747 2.60432G/s
+BM_zigzag_encode/131072            25243 ns        25243 ns        27802 2.59617G/s
+BM_zigzag_encode/262144            50278 ns        50278 ns        13952 2.60693G/s
+BM_zigzag_encode/524288           100563 ns       100562 ns         6932 2.60678G/s
+BM_zigzag_encode/1048576          211846 ns       211845 ns         3222 2.47487G/s
+BM_zigzag_decode/4096                675 ns          675 ns      1041044 3.03263G/s
+BM_zigzag_decode/8192               1342 ns         1342 ns       523553 3.05196G/s
+BM_zigzag_decode/16384              2643 ns         2643 ns       265497 3.09905G/s
+BM_zigzag_decode/32768              5383 ns         5383 ns       130976 3.04377G/s
+BM_zigzag_decode/65536             11474 ns        11474 ns        60817 2.85588G/s
+BM_zigzag_decode/131072            21777 ns        21777 ns        32345 3.00944G/s
+BM_zigzag_decode/262144            43477 ns        43478 ns        14387  3.0147G/s
+BM_zigzag_decode/524288            86120 ns        86120 ns         8145 3.04393G/s
+BM_zigzag_decode/1048576          173095 ns       173093 ns         4028 3.02894G/s
 ```
 
 > The unit of `Throughput` is `GB/s` (Giga Bytes per second).
