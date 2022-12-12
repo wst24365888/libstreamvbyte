@@ -39,7 +39,7 @@ jobs:
         with:
           cmake-version: '3.16.x'
 
-      - name: Build
+      - name: Build Tests
         run: |
           cmake . -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_PYBIND11=ON -DPRINT_BENCHMARK=ON -DBUILD_TESTS=ON -DBUILD_BENCHMARKS=OFF
           cmake --build . --config Release
@@ -49,9 +49,9 @@ jobs:
           ./libstreamvbyte_tests
           poetry run python -m pytest ./tests/test.py
 
-      - name: Build
+      - name: Build Benchmarks
         run: |
-          cmake . -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_PYBIND11=OFF -DPRINT_BENCHMARK=OFF -DBUILD_TESTS=ON -DBUILD_BENCHMARKS=OFF
+          cmake . -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_PYBIND11=OFF -DPRINT_BENCHMARK=OFF -DBUILD_TESTS=ON -DBUILD_BENCHMARKS=ON
           cmake --build . --config Release
 
       - name: Benchmark
