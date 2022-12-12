@@ -33,11 +33,11 @@ jobs:
       - name: Install Dependencies
         run: |
           poetry install --only test
-        
+
       - name: Setup CMake
         uses: jwlawson/actions-setup-cmake@v1.13
         with:
-          cmake-version: '3.16.x'
+          cmake-version: "3.16.x"
 
       - name: Build Tests
         run: |
@@ -56,4 +56,4 @@ jobs:
 
       - name: Benchmark
         run: |
-          ./libstreamvbyte_benchmarks
+          ./libstreamvbyte_benchmarks --benchmark_counters_tabular=true
