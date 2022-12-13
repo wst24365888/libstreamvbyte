@@ -18,7 +18,7 @@
 #include <chrono>
 #endif
 
-static void encode_ssse3(const uint32_t*& in, std::size_t& count, uint8_t*& control_stream, uint8_t*& data_stream) {
+static void encode_vectorized(const uint32_t*& in, std::size_t& count, uint8_t*& control_stream, uint8_t*& data_stream) {
 #ifdef PRINT_BENCHMARK
     auto start = std::chrono::high_resolution_clock::now();
 #endif
@@ -61,7 +61,7 @@ static void encode_ssse3(const uint32_t*& in, std::size_t& count, uint8_t*& cont
 
 #ifdef PRINT_BENCHMARK
     auto end = std::chrono::high_resolution_clock::now();
-    std::cout << "encode_ssse3: " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count() << " ns, processed " << original_count - count << " elements" << std::endl;
+    std::cout << "encode_vectorized: " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count() << " ns, processed " << original_count - count << " elements" << std::endl;
 #endif
 }
 

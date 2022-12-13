@@ -3,9 +3,9 @@
 #include <vector>
 
 #if defined(_MSC_VER) && defined(_M_AMD64)
-#include "streamvbyte_encode_ssse3.hpp"
-#elif defined(__SSSE3__)
-#include "streamvbyte_encode_ssse3.hpp"
+#include "streamvbyte_encode_vectorized.hpp"
+#elif defined(__SSSE3__) || defined(__NEON__)
+#include "streamvbyte_encode_vectorized.hpp"
 #endif
 
 std::size_t streamvbyte::encode(const uint32_t* in, std::size_t count, uint8_t* out) {
@@ -13,9 +13,9 @@ std::size_t streamvbyte::encode(const uint32_t* in, std::size_t count, uint8_t* 
     uint8_t* data_stream = out + (count + 3) / 4;
 
 #if defined(_MSC_VER) && defined(_M_AMD64)
-    encode_ssse3(in, count, control_stream, data_stream); // side effect: all arguments are modified
-#elif defined(__SSSE3__)
-    encode_ssse3(in, count, control_stream, data_stream); // side effect: all arguments are modified
+    encode_vectorized(in, count, control_stream, data_stream); // side effect: all arguments are modified
+#elif defined(__SSSE3__) || defined(__NEON__)
+    encode_vectorized(in, count, control_stream, data_stream); // side effect: all arguments are modified
 #endif
 
     encode_scalar(in, count, control_stream, data_stream); // side effect: count, control_stream, data_stream are modified

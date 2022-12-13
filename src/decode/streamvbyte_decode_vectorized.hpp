@@ -29,7 +29,7 @@ static inline __m128i decode_data(uint32_t control_bits, const uint8_t** data_st
     return data;
 }
 
-static void decode_ssse3(uint32_t*& out, std::size_t& count, const uint8_t*& control_stream, const uint8_t*& data_stream) {
+static void decode_vectorized(uint32_t*& out, std::size_t& count, const uint8_t*& control_stream, const uint8_t*& data_stream) {
 #ifdef PRINT_BENCHMARK
     auto start = std::chrono::high_resolution_clock::now();
 #endif
@@ -52,7 +52,7 @@ static void decode_ssse3(uint32_t*& out, std::size_t& count, const uint8_t*& con
 
 #ifdef PRINT_BENCHMARK
     auto end = std::chrono::high_resolution_clock::now();
-    std::cout << "decode_ssse3: " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count() << " ns, processed " << original_count - count << " elements" << std::endl;
+    std::cout << "decode_vectorized: " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count() << " ns, processed " << original_count - count << " elements" << std::endl;
 #endif
 }
 

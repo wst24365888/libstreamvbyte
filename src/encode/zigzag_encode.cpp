@@ -3,17 +3,17 @@
 #include <vector>
 
 #if defined(_MSC_VER) && defined(_M_AMD64)
-#include "zigzag_encode_ssse3.hpp"
-#elif defined(__SSSE3__)
-#include "zigzag_encode_ssse3.hpp"
+#include "zigzag_encode_vectorized.hpp"
+#elif defined(__SSSE3__) || defined(__NEON__)
+#include "zigzag_encode_vectorized.hpp"
 #endif
 
 void streamvbyte::zigzag_encode(const int32_t* in, std::size_t count, uint32_t* out) {
 
 #if defined(_MSC_VER) && defined(_M_AMD64)
-    zigzag_encode_ssse3(in, count, out); // side effect: count, out are modified
-#elif defined(__SSSE3__)
-    zigzag_encode_ssse3(in, count, out); // side effect: count, out are modified
+    zigzag_encode_vectorized(in, count, out); // side effect: count, out are modified
+#elif defined(__SSSE3__) || defined(__NEON__)
+    zigzag_encode_vectorized(in, count, out); // side effect: count, out are modified
 #endif
 
     zigzag_encode_scalar(in, count, out); // side effect: count, out are modified

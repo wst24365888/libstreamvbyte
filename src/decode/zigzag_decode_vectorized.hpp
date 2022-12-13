@@ -15,7 +15,7 @@
 #include <chrono>
 #endif
 
-static void zigzag_decode_ssse3(const uint32_t*& in, std::size_t& count, int32_t*& out) {
+static void zigzag_decode_vectorized(const uint32_t*& in, std::size_t& count, int32_t*& out) {
 #ifdef PRINT_BENCHMARK
     auto start = std::chrono::high_resolution_clock::now();
 #endif
@@ -37,7 +37,7 @@ static void zigzag_decode_ssse3(const uint32_t*& in, std::size_t& count, int32_t
 
 #ifdef PRINT_BENCHMARK
     auto end = std::chrono::high_resolution_clock::now();
-    std::cout << "zigzag_decode_ssse3: " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count() << " ns, processed " << original_count - count << " elements" << std::endl;
+    std::cout << "zigzag_decode_vectorized: " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count() << " ns, processed " << original_count - count << " elements" << std::endl;
 #endif
 }
 
