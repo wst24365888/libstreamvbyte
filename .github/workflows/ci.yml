@@ -63,7 +63,7 @@ jobs:
         id: runcmd
         with:
           arch: aarch64
-          distro: ubuntu-latest
+          distro: ubuntu20.04
 
       - name: Switch to Current Branch
         run: git checkout ${{ env.BRANCH }}
