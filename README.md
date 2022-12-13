@@ -58,7 +58,7 @@
 
 `libstreamvbyte` is a `C++` implementation of [StreamVByte](#reference), with `Python` bindings using `pybind11`. 
 
-[StreamVByte](#reference) is a integer compression technique that use SIMD instructions (vectorization) to improve performance. The library is optimized for CPUs with the `SSSE3` instruction set (which is supported by most x86_64 processors), and can also be used with ARM processors and other 32-bit architectures, although it will fall back to scalar implementations in those cases.
+[StreamVByte](#reference) is a integer compression technique that use SIMD instructions (vectorization) to improve performance. The library is optimized with `SSSE3` intrinsics, which are supported by most x86_64 processors. It uses `sse2neon` to translate `SSSE3` intrinsics to `NEON` intrinsics for `ARM` processors. The library can also be used with other 32-bit architectures, although it will fall back to scalar implementations in those cases.
 
 With `libstreamvbyte`, you can quickly and efficiently compress integer sequences, reducing the amount of storage space and network bandwidth required. The library is easy to use and integrates seamlessly with `Python` via `pybind11` bindings. Whether you're working with large datasets or building a distributed computing system, `libstreamvbyte` can help you improve performance and reduce the resources needed to handle your data.
 
@@ -280,7 +280,7 @@ make libstreamvbyte_benchmarks
 ## Roadmap
 
 - [x] Zigzag encoding/decoding.
-- [ ] Support ARM processors with `NEON` intrinsics.
+- [x] Support ARM processors with `NEON` intrinsics.
 - [ ] Differential coding (delta encoding/decoding).
 
 See the [open issues](https://github.com/wst24365888/libstreamvbyte/issues)
