@@ -46,7 +46,7 @@ jobs:
       - name: Build
         run: |
           cmake . -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_PYBIND11=ON -DPRINT_BENCHMARK=OFF -DBUILD_TESTS=ON -DBUILD_BENCHMARKS=OFF
-          make libstreamvbyte_tests
+          make libstreamvbyte libstreamvbyte_tests
 
       - name: Test
         run: |
