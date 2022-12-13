@@ -7,6 +7,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(ARCH_EXTENSION "")
 set(IS_ARM OFF)
 
+message(STATUS "CMAKE_SYSTEM_PROCESSOR: ${CMAKE_SYSTEM_PROCESSOR}")
+
 # for windows
 if(CMAKE_SYSTEM_PROCESSOR MATCHES "AMD64")
     set(ARCH_EXTENSION "-mssse3")
@@ -28,6 +30,9 @@ elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "armv8")
     set(ARCH_EXTENSION "-march=armv8-a+fp+simd")
     set(IS_ARM ON)
 endif()
+
+message(STATUS "ARCH_EXTENSION: ${ARCH_EXTENSION}")
+message(STATUS "IS_ARM: ${IS_ARM}")
 
 option(BUILD_SHARED_LIBS "Build shared libraries." ON)
 option(BUILD_PYBIND11 "Build pybind11." OFF)
