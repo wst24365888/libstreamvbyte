@@ -2,9 +2,14 @@
 #define zigzag_encode_SSSE3
 
 #include "branch_prediction.h"
-#include "tmmintrin.h"
 #include <config.h>
 #include <iostream>
+
+#ifdef IS_ARM
+#include "sse2neon.h"
+#else
+#include <tmmintrin.h>
+#endif
 
 #ifdef PRINT_BENCHMARK
 #include <chrono>

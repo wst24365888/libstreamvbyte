@@ -1,3 +1,4 @@
 #pragma once
 
+#cmakedefine IS_ARM
 #cmakedefine PRINT_BENCHMARK

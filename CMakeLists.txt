@@ -4,16 +4,29 @@ project(libstreamvbyte VERSION 0.2.4)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(ARCH_EXTENSION "")
+set(IS_ARM OFF)
+
 # for windows
 if(CMAKE_SYSTEM_PROCESSOR MATCHES "AMD64")
     set(ARCH_EXTENSION "-mssse3")
 elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "ARM64")
-    set(ARCH_EXTENSION "-mssse3")
-# for others
+    set(ARCH_EXTENSION "-march=armv8-a+fp+simd")
+    set(IS_ARM ON)
+# for macOS
+elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "arm64")
+    set(ARCH_EXTENSION "-march=armv8-a+fp+simd")
+    set(IS_ARM ON)
+# for macOS and linux
 elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64")
     set(ARCH_EXTENSION "-mssse3")
-elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "arm64")
-    set(ARCH_EXTENSION "-mfpu=neon")
+# for other linux
+elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64")
+    set(ARCH_EXTENSION "-march=armv8-a+fp+simd")
+    set(IS_ARM ON)
+elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "armv8")
+    set(ARCH_EXTENSION "-march=armv8-a+fp+simd")
+    set(IS_ARM ON)
 endif()
 
 option(BUILD_SHARED_LIBS "Build shared libraries." ON)

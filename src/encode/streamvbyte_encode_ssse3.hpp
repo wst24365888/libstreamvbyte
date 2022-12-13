@@ -4,10 +4,15 @@
 #include "branch_prediction.h"
 #include "encode_shuffle_table.h"
 #include "length_table.h"
-#include "tmmintrin.h"
 #include <config.h>
 #include <iostream>
 #include <tuple>
+
+#ifdef IS_ARM
+#include "sse2neon.h"
+#else
+#include <tmmintrin.h>
+#endif
 
 #ifdef PRINT_BENCHMARK
 #include <chrono>
