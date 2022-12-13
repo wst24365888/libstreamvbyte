@@ -68,11 +68,7 @@ jobs:
           cpu: cortex-a53
           commands: |
             apt-get update -qq -y
-            apt-get install -qq -y python3.10 python3-pip
-            pip3 install poetry
-            poetry install --only test
-            apt-get install -qq -y cmake make g++
-            cmake . -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_PYBIND11=ON -DPRINT_BENCHMARK=ON -DBUILD_TESTS=ON -DBUILD_BENCHMARKS=OFF
+            apt-get install -qq -y build-essential cmake
+            cmake . -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_PYBIND11=OFF -DPRINT_BENCHMARK=ON -DBUILD_TESTS=ON -DBUILD_BENCHMARKS=OFF
             cmake --build . --config Release
             ./libstreamvbyte_tests
-            poetry run python -m pytest ./tests/test.py
