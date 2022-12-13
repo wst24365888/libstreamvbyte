@@ -8,7 +8,7 @@
 #include <iostream>
 #include <tuple>
 
-#ifdef IS_ARM
+#ifdef __NEON__
 #include "sse2neon.h"
 #else
 #include <tmmintrin.h>

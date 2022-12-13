@@ -1,4 +1,4 @@
 #pragma once
 
-#cmakedefine IS_ARM
+#cmakedefine __NEON__
 #cmakedefine PRINT_BENCHMARK

@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(ARCH_EXTENSION "")
-set(IS_ARM OFF)
+set(__NEON__ OFF)
 
 message(STATUS "CMAKE_SYSTEM_PROCESSOR: ${CMAKE_SYSTEM_PROCESSOR}")
 
@@ -14,25 +14,25 @@ if(CMAKE_SYSTEM_PROCESSOR MATCHES "AMD64")
     set(ARCH_EXTENSION "-mssse3")
 elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "ARM64")
     set(ARCH_EXTENSION "-march=armv8-a+fp+simd")
-    set(IS_ARM ON)
+    set(__NEON__ ON)
 # for macOS
 elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "arm64")
     set(ARCH_EXTENSION "-march=armv8-a+fp+simd")
-    set(IS_ARM ON)
+    set(__NEON__ ON)
 # for macOS and linux
 elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64")
     set(ARCH_EXTENSION "-mssse3")
 # for other linux
 elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64")
     set(ARCH_EXTENSION "-march=armv8-a+fp+simd")
-    set(IS_ARM ON)
+    set(__NEON__ ON)
 elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "armv8")
     set(ARCH_EXTENSION "-march=armv8-a+fp+simd")
-    set(IS_ARM ON)
+    set(__NEON__ ON)
 endif()
 
 message(STATUS "ARCH_EXTENSION: ${ARCH_EXTENSION}")
-message(STATUS "IS_ARM: ${IS_ARM}")
+message(STATUS "__NEON__: ${__NEON__}")
 
 option(BUILD_SHARED_LIBS "Build shared libraries." ON)
 option(BUILD_PYBIND11 "Build pybind11." OFF)

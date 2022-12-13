@@ -5,7 +5,7 @@
 #include <config.h>
 #include <iostream>
 
-#ifdef IS_ARM
+#ifdef __NEON__
 #include "sse2neon.h"
 #else
 #include <tmmintrin.h>
