@@ -1,4 +1,5 @@
 #include "streamvbyte.h"
+#include "config.h"
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
@@ -83,9 +84,9 @@ PYBIND11_MODULE(libstreamvbyte, m) {
             return true;
 #elif defined(__SSSE3__) || defined(__NEON__)
             return true;
-#endif
-
+#else
             return false;
+#endif
         },
         "Check if the current wheel is a vectorized version.");
 }
