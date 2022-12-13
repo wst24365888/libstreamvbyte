@@ -15,20 +15,28 @@ if(CMAKE_SYSTEM_PROCESSOR MATCHES "AMD64")
 elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "ARM64")
     set(ARCH_EXTENSION "-march=armv8-a+fp+simd")
     set(__NEON__ ON)
-# for macOS
-elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "arm64")
-    set(ARCH_EXTENSION "-march=armv8-a+fp+simd")
-    set(__NEON__ ON)
-# for macOS and linux
+# for other linux
 elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64")
     set(ARCH_EXTENSION "-mssse3")
-# for other linux
 elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64")
     set(ARCH_EXTENSION "-march=armv8-a+fp+simd")
     set(__NEON__ ON)
 elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "armv8")
     set(ARCH_EXTENSION "-march=armv8-a+fp+simd")
     set(__NEON__ ON)
+endif()
+
+# for macOS, check ARCHFLAGS
+if (APPLE)
+    if (NOT DEFINED ENV{ARCHFLAGS})
+        message(FATAL_ERROR "ARCHFLAGS is not defined.")
+    endif()
+    if ($ENV{ARCHFLAGS} MATCHES "x86_64")
+        set(ARCH_EXTENSION "-mssse3")
+    elseif ($ENV{ARCHFLAGS} MATCHES "arm64")
+        set(ARCH_EXTENSION "-march=armv8-a+fp+simd")
+        set(__NEON__ ON)
+    endif()
 endif()
 
 message(STATUS "ARCH_EXTENSION: ${ARCH_EXTENSION}")
