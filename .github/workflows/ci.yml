@@ -58,44 +58,23 @@ jobs:
         with:
           submodules: true
 
+      - name: Switch to Current Branch
+        run: git checkout ${{ env.BRANCH }}
+
       - uses: uraimo/run-on-arch-action@v2
         name: Run commands
         id: runcmd
         with:
           arch: aarch64
           distro: ubuntu20.04
-          githubToken: ${{ github.token }}
+          install: |
+            apt-get update
+            apt-get install -y python3 python3-pip
+            pip3 install poetry
+            poetry install --only test
+            apt-get install -y cmake make g++
           run: |
-            uname -a
-
-      - name: Switch to Current Branch
-        run: git checkout ${{ env.BRANCH }}
-
-      - name: Setup Python 3.10.4
-        uses: actions/setup-python@v3
-        with:
-          python-version: "3.10.4"
-
-      - name: Setup Poetry
-        uses: Gr1N/setup-poetry@v7
-        with:
-          poetry-version: 1.2.2
-
-      - name: Install Dependencies
-        run: |
-          poetry install --only test
-
-      - name: Setup CMake
-        uses: jwlawson/actions-setup-cmake@v1.13
-        with:
-          cmake-version: "3.16.x"
-
-      - name: Build Tests
-        run: |
-          cmake . -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_PYBIND11=ON -DPRINT_BENCHMARK=ON -DBUILD_TESTS=ON -DBUILD_BENCHMARKS=OFF
-          cmake --build . --config Release
-
-      - name: Test
-        run: |
-          ./libstreamvbyte_tests
-          poetry run python -m pytest ./tests/test.py
+            cmake . -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_PYBIND11=ON -DPRINT_BENCHMARK=ON -DBUILD_TESTS=ON -DBUILD_BENCHMARKS=OFF
+            cmake --build . --config Release
+            ./libstreamvbyte_tests
+            poetry run python -m pytest ./tests/test.py
