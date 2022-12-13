@@ -61,19 +61,16 @@ jobs:
       - name: Switch to Current Branch
         run: git checkout ${{ env.BRANCH }}
 
-      - uses: uraimo/run-on-arch-action@v2
-        name: Run commands
-        id: runcmd
+      - uses: pguyot/arm-runner-action@v2.5.2
         with:
-          arch: aarch64
-          distro: ubuntu20.04
-          install: |
-            apt-get update -q
+          base_image: https://dietpi.com/downloads/images/DietPi_RPi-ARMv8-Bullseye.7z
+          cpu: cortex-a53
+          commands: |
+            apt-get update -q -y
             apt-get install -q -y python3.10 python3-pip
             pip3 install poetry
             poetry install --only test
             apt-get install -q -y cmake make g++
-          run: |
             cmake . -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_PYBIND11=ON -DPRINT_BENCHMARK=ON -DBUILD_TESTS=ON -DBUILD_BENCHMARKS=OFF
             cmake --build . --config Release
             ./libstreamvbyte_tests
