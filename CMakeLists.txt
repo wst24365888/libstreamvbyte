@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(libstreamvbyte VERSION 0.2.4)
+project(libstreamvbyte VERSION 0.3.0)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
