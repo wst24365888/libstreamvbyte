@@ -42,7 +42,7 @@ jobs:
       - name: Build Tests
         run: |
           cmake . -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_PYBIND11=ON -DPRINT_BENCHMARK=ON -DBUILD_TESTS=ON -DBUILD_BENCHMARKS=OFF
-          cmake --build . --config Release
+          make libstreamvbyte libstreamvbyte_tests
 
       - name: Test
         run: |
@@ -70,5 +70,5 @@ jobs:
             apt-get update -qq -y
             apt-get install -qq -y build-essential cmake
             cmake . -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_PYBIND11=OFF -DPRINT_BENCHMARK=ON -DBUILD_TESTS=ON -DBUILD_BENCHMARKS=OFF
-            cmake --build . --config Release
+            make libstreamvbyte_tests
             ./libstreamvbyte_tests
