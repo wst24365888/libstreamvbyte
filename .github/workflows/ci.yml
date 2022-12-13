@@ -8,14 +8,62 @@ on:
       - main
 
 jobs:
-  test:
-    name: Test
+  test-ssse3:
+    name: Test SSSE3
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: true
+
+      - name: Switch to Current Branch
+        run: git checkout ${{ env.BRANCH }}
+
+      - name: Setup Python 3.10.4
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.10.4"
+
+      - name: Setup Poetry
+        uses: Gr1N/setup-poetry@v7
+        with:
+          poetry-version: 1.2.2
+
+      - name: Install Dependencies
+        run: |
+          poetry install --only test
+
+      - name: Setup CMake
+        uses: jwlawson/actions-setup-cmake@v1.13
+        with:
+          cmake-version: "3.16.x"
+
+      - name: Build Tests
+        run: |
+          cmake . -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_PYBIND11=ON -DPRINT_BENCHMARK=ON -DBUILD_TESTS=ON -DBUILD_BENCHMARKS=OFF
+          cmake --build . --config Release
+
+      - name: Test
+        run: |
+          ./libstreamvbyte_tests
+          poetry run python -m pytest ./tests/test.py
+
+  test-neon:
+    name: Test NEON
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - uses: uraimo/run-on-arch-action@v2
+        name: Run commands
+        id: runcmd
+        with:
+          arch: aarch64
+          distro: ubuntu-latest
 
       - name: Switch to Current Branch
         run: git checkout ${{ env.BRANCH }}
