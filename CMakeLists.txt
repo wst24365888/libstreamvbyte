@@ -53,7 +53,7 @@ if (BUILD_SHARED_LIBS)
     add_library(streamvbyte ${CMAKE_CURRENT_SOURCE_DIR}/src/encode/streamvbyte_encode.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/decode/streamvbyte_decode.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/encode/zigzag_encode.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/decode/zigzag_decode.cpp)
     target_compile_definitions(streamvbyte PRIVATE VERSION_INFO=${PROJECT_VERSION})
 
-    target_include_directories(streamvbyte PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_SOURCE_DIR}/src)
+    target_include_directories(streamvbyte PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_SOURCE_DIR}/src ${CMAKE_CURRENT_SOURCE_DIR}/sse2neon)
 
     set_property(TARGET streamvbyte PROPERTY POSITION_INDEPENDENT_CODE ON)
 
@@ -70,7 +70,7 @@ elseif (BUILD_PYBIND11)
     pybind11_add_module(libstreamvbyte ${CMAKE_CURRENT_SOURCE_DIR}/src/streamvbyte.cpp)
     target_compile_definitions(libstreamvbyte PRIVATE VERSION_INFO=${PROJECT_VERSION})
 
-    target_include_directories(libstreamvbyte PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_SOURCE_DIR}/src)
+    target_include_directories(libstreamvbyte PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_SOURCE_DIR}/src ${CMAKE_CURRENT_SOURCE_DIR}/sse2neon)
     target_sources(libstreamvbyte PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/encode/streamvbyte_encode.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/decode/streamvbyte_decode.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/encode/zigzag_encode.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/decode/zigzag_decode.cpp)
 
     set_property(TARGET libstreamvbyte PROPERTY POSITION_INDEPENDENT_CODE ON)
@@ -89,7 +89,7 @@ if (BUILD_TESTS)
     FetchContent_MakeAvailable(googletest)
     
     add_executable(libstreamvbyte_tests ${CMAKE_CURRENT_SOURCE_DIR}/tests/test.cpp)
-    target_include_directories(libstreamvbyte_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_SOURCE_DIR}/src)
+    target_include_directories(libstreamvbyte_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_SOURCE_DIR}/src ${CMAKE_CURRENT_SOURCE_DIR}/sse2neon)
     target_sources(libstreamvbyte_tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/encode/streamvbyte_encode.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/decode/streamvbyte_decode.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/encode/zigzag_encode.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/decode/zigzag_decode.cpp)
 
     target_link_libraries(
@@ -115,7 +115,7 @@ if (BUILD_BENCHMARKS)
     FetchContent_MakeAvailable(googlebenchmark)
 
     add_executable(libstreamvbyte_benchmarks ${CMAKE_CURRENT_SOURCE_DIR}/benchmarks/benchmark.cpp)
-    target_include_directories(libstreamvbyte_benchmarks PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_SOURCE_DIR}/src)
+    target_include_directories(libstreamvbyte_benchmarks PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_SOURCE_DIR}/src ${CMAKE_CURRENT_SOURCE_DIR}/sse2neon)
     target_sources(libstreamvbyte_benchmarks PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/encode/streamvbyte_encode.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/decode/streamvbyte_decode.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/encode/zigzag_encode.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/decode/zigzag_decode.cpp)
 
     target_link_libraries(
