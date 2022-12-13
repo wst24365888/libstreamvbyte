@@ -28,6 +28,7 @@ endif()
 
 # for macOS, check ARCHFLAGS
 if (APPLE)
+    message(STATUS "ARCHFLAGS: $ENV{ARCHFLAGS}")
     if (NOT DEFINED ENV{ARCHFLAGS})
         message(FATAL_ERROR "ARCHFLAGS is not defined.")
     endif()
