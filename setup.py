@@ -97,7 +97,7 @@ class CMakeBuild(build_ext):
 setup(
     name='libstreamvbyte',
     version='0.3.2',
-    description='A C++ implementation with Python bindings of StreamVByte.',
+    description='A C++ implementation of StreamVByte, with Python bindings.',
     long_description=open('README.md').read(),
     author='HSING-HAN WU (Xyphuz)',
     author_email='xyphuzwu@gmail.com',
@@ -108,4 +108,19 @@ setup(
     ext_modules=[CMakeExtension("libstreamvbyte")],
     cmdclass=dict(build_ext=CMakeBuild),
     long_description_content_type='text/markdown',
+    license='MIT',
+    classifiers=[
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: MacOS',
+        'Operating System :: Microsoft :: Windows',
+        'Operating System :: POSIX :: Linux',
+        'Programming Language :: C++',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: Implementation :: CPython',
+        'Topic :: System :: Archiving :: Compression',
+        'Topic :: Software Development :: Libraries :: Python Modules',
+    ],
+    keywords='streamvbyte, libstreamvbyte, vbyte, integer, compression, SIMD, vectorization, SSSE3, NEON, SSE2NEON, Python, C++, CMake, pybind11',
 )
