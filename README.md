@@ -7,7 +7,9 @@
 [![Stargazers][stars-shield]][stars-url]
 [![MIT License][license-shield]][license-url]
 [![Issues][issues-shield]][issues-url]
-[![Issues Closed][issues-closed-shield]</div>][issues-closed-url]
+[![Issues Closed][issues-closed-shield]][issues-closed-url]
+[![Python Version][python-version-shield]][python-version-url]
+[![Week Download][download-shield]</div>][download-url]
 
 <br />
 
@@ -356,3 +358,7 @@ for more information.
 [issues-closed-url]: https://github.com/wst24365888/libstreamvbyte/issues?q=is%3Aissue+is%3Aclosed
 [license-shield]: https://img.shields.io/github/license/wst24365888/libstreamvbyte.svg?style=for-the-badge
 [license-url]: https://github.com/wst24365888/libstreamvbyte/blob/main/LICENSE
+[python-version-shield]: https://img.shields.io/pypi/pyversions/libstreamvbyte?color=A000A0&style=for-the-badge
+[python-version-url]: https://pypi.org/project/libstreamvbyte/
+[download-shield]: https://img.shields.io/pypi/dw/libstreamvbyte?color=A000A0&style=for-the-badge
+[download-url]: https://pypistats.org/packages/libstreamvbyte
