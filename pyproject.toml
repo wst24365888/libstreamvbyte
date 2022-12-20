@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "libstreamvbyte"
-version = "0.3.3"
+version = "0.3.4"
 description = "A C++ implementation of StreamVByte, with Python bindings."
 authors = ["HSING-HAN WU (Xyphuz) <xyphuzwu@gmail.com>"]
 readme = "README.md"
