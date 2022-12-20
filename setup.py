@@ -96,7 +96,7 @@ class CMakeBuild(build_ext):
 
 setup(
     name='libstreamvbyte',
-    version='0.3.4',
+    version='0.3.5',
     description='A C++ implementation of StreamVByte, with Python bindings.',
     long_description=open('README.md').read(),
     author='HSING-HAN WU (Xyphuz)',
