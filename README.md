@@ -64,7 +64,7 @@
 
 With `libstreamvbyte`, you can quickly and efficiently compress integer sequences, reducing the amount of storage space and network bandwidth required. The library is easy to use and integrates seamlessly with `Python` via `pybind11` bindings. Whether you're working with large datasets or building a distributed computing system, `libstreamvbyte` can help you improve performance and reduce the resources needed to handle your data.
 
-Currently supports `Python 3.10+` on Windows, Linux (`manylinux_2_17`, `musllinux_1_1`) and macOS (`universal2`).
+Currently supports `Python 3.8+` on Windows, Linux (`manylinux_2_17`, `musllinux_1_1`) and macOS (`universal2`).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
