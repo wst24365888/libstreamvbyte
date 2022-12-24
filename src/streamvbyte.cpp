@@ -25,7 +25,7 @@ PYBIND11_MODULE(libstreamvbyte, m) {
 
             return out;
         },
-        py::arg("in"),
+        py::arg("in_uint32"),
         "Encode an array of unsigned integers into a byte array.");
 
     m.def(
@@ -43,7 +43,7 @@ PYBIND11_MODULE(libstreamvbyte, m) {
 
             return out;
         },
-        py::arg("in"), py::arg("size"),
+        py::arg("in_uint8"), py::arg("size"),
         "Decode a byte array into an array of unsigned integers.");
 
     m.def(
@@ -61,7 +61,7 @@ PYBIND11_MODULE(libstreamvbyte, m) {
 
             return out;
         },
-        py::arg("in"),
+        py::arg("in_int32"),
         "Encode an array of signed integers into an array of unsigned integers.");
 
     m.def(
@@ -79,7 +79,7 @@ PYBIND11_MODULE(libstreamvbyte, m) {
 
             return out;
         },
-        py::arg("in"),
+        py::arg("in_uint32"),
         "Decode an array of unsigned integers into an array of signed integers.");
 
     m.def(
