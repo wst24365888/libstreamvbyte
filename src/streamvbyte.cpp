@@ -93,4 +93,8 @@ PYBIND11_MODULE(libstreamvbyte, m) {
 #endif
         },
         "Check if the current wheel is a vectorized version.");
+
+#if defined(PROJECT_VERSION)
+    m.attr("__version__") = PROJECT_VERSION;
+#endif
 }

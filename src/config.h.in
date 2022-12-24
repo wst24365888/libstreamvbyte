@@ -1,4 +1,5 @@
 #pragma once
 
+#cmakedefine PROJECT_VERSION "@PROJECT_VERSION@"
 #cmakedefine __NEON__
 #cmakedefine PRINT_BENCHMARK
