@@ -1,8 +1,10 @@
 #include "streamvbyte.h"
 #include <gtest/gtest.h>
 
-TEST(test, streamvbyte) {
-    std::size_t N = (1 << 20) + 2;
+class StreamVByteTest : public ::testing::TestWithParam<std::size_t> { };
+
+TEST_P(StreamVByteTest, streamvbyte) {
+    std::size_t N = GetParam();
 
     uint32_t* original_data = new uint32_t[N];
     for (std::size_t i = 0; i < N; ++i) {
@@ -25,8 +27,8 @@ TEST(test, streamvbyte) {
     delete[] recovered_data;
 }
 
-TEST(test, zigzag) {
-    std::size_t N = (1 << 20) + 2;
+TEST_P(StreamVByteTest, zigzag) {
+    std::size_t N = GetParam();
 
     int32_t* original_data = new int32_t[N];
     for (std::size_t i = 0; i < N; ++i) {
@@ -48,8 +50,8 @@ TEST(test, zigzag) {
     delete[] recovered_data;
 }
 
-TEST(test, integrated) {
-    std::size_t N = (1 << 20) + 2;
+TEST_P(StreamVByteTest, integrated) {
+    std::size_t N = GetParam();
 
     std::vector<int32_t> original_data(N);
     for (std::size_t i = 0; i < N; ++i) {
@@ -65,7 +67,7 @@ TEST(test, integrated) {
     }
 }
 
-int main(int argc, char** argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}
+INSTANTIATE_TEST_CASE_P(
+    test, StreamVByteTest,
+    ::testing::Values(
+        0, 7, 8, 9, (1 << 10), (1 << 20), (1 << 20) + 2));
