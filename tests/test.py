@@ -7,11 +7,11 @@ N = 2**20 + 2
 def test_streamvbyte():
     original_data = np.random.randint(0, 2**32, N, dtype=np.uint32)
 
-    compressed_bytes = svb.encode(original_data)
+    compressed_bytes = svb.encode(in=original_data)
     assert type(compressed_bytes) == np.ndarray
     assert compressed_bytes.dtype == np.uint8
 
-    recovered_data = svb.decode(compressed_bytes, N)
+    recovered_data = svb.decode(in=compressed_bytes, size=N)
     assert type(recovered_data) == np.ndarray
     assert recovered_data.dtype == np.uint32
 
@@ -22,11 +22,11 @@ def test_streamvbyte():
 def test_zigzag():
     original_data = np.random.randint(-2**31, 2**31, N, dtype=np.int32)
 
-    encoded_unsigend_integers = svb.zigzag_encode(original_data)
+    encoded_unsigend_integers = svb.zigzag_encode(in=original_data)
     assert type(encoded_unsigend_integers) == np.ndarray
     assert encoded_unsigend_integers.dtype == np.uint32
 
-    recovered_data = svb.zigzag_decode(encoded_unsigend_integers)
+    recovered_data = svb.zigzag_decode(in=encoded_unsigend_integers)
     assert type(recovered_data) == np.ndarray
     assert recovered_data.dtype == np.int32
 
@@ -37,11 +37,15 @@ def test_zigzag():
 def test_integrate():
     original_data = np.random.randint(-2**31, 2**31, N, dtype=np.int32)
 
-    compressed_bytes = svb.encode(svb.zigzag_encode(original_data))
+    compressed_bytes = svb.encode(
+        in=svb.zigzag_encode(in=original_data)
+    )
     assert type(compressed_bytes) == np.ndarray
     assert compressed_bytes.dtype == np.uint8
 
-    recovered_data = svb.zigzag_decode(svb.decode(compressed_bytes, N))
+    recovered_data = svb.zigzag_decode(
+        in=svb.decode(in=compressed_bytes, size=N)
+    )
     assert type(recovered_data) == np.ndarray
     assert recovered_data.dtype == np.int32
 
