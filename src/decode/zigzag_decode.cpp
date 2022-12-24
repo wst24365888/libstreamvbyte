@@ -9,6 +9,9 @@
 #endif
 
 void streamvbyte::zigzag_decode(const uint32_t* in, std::size_t count, int32_t* out) {
+    if (UNLIKELY(count == 0)) {
+        return;
+    }
 
 #if defined(_MSC_VER) && defined(_M_AMD64)
     zigzag_decode_vectorized(in, count, out); // side effect: count, out are modified

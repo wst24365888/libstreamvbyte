@@ -9,6 +9,10 @@
 #endif
 
 std::size_t streamvbyte::decode(const uint8_t* in, uint32_t* out, std::size_t count) {
+    if (UNLIKELY(count == 0)) {
+        return 0;
+    }
+
     const uint8_t* control_stream = in;
     const uint8_t* data_stream = in + (count + 3) / 4;
 
