@@ -119,16 +119,16 @@ And here are the APIs.
 
 ```python
 # Encode an array of unsigned integers into a byte array.
-encode(arg0: numpy.ndarray[numpy.uint32]) -> numpy.ndarray[numpy.uint8]
+encode(in_uint32: numpy.ndarray[numpy.uint32]) -> numpy.ndarray[numpy.uint8]
 
 # Decode a byte array into an array of unsigned integers.
-decode(arg0: numpy.ndarray[numpy.uint8], arg1: int) -> numpy.ndarray[numpy.uint32]
+decode(in_uint8: numpy.ndarray[numpy.uint8], size: int) -> numpy.ndarray[numpy.uint32]
 
 # Encode an array of signed integers into an array of unsigned integers.
-zigzag_encode(arg0: numpy.ndarray[numpy.int32]) -> numpy.ndarray[numpy.uint32]
+zigzag_encode(in_int32: numpy.ndarray[numpy.int32]) -> numpy.ndarray[numpy.uint32]
 
 # Decode an array of unsigned integers into an array of signed integers.
-zigzag_decode(arg0: numpy.ndarray[numpy.uint32]) -> numpy.ndarray[numpy.int32]
+zigzag_decode(in_uint32: numpy.ndarray[numpy.uint32]) -> numpy.ndarray[numpy.int32]
 
 # Check if the current wheel is a vectorized version.
 is_vectorized_version() -> bool
