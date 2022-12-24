@@ -51,3 +51,7 @@ def test_integrate():
 
     assert len(original_data) == len(recovered_data)
     assert np.array_equal(original_data, recovered_data)
+
+
+def test_version():
+    assert svb.__version__ == "0.3.5"
