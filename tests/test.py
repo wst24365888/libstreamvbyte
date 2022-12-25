@@ -54,4 +54,4 @@ def test_integrate():
 
 
 def test_version():
-    assert svb.__version__ == "0.3.6"
+    assert svb.__version__ == "0.3.7"
