@@ -4,6 +4,7 @@
 #include "branch_prediction.h"
 #include <config.h>
 #include <iostream>
+#include <cstdint>
 
 #ifdef PRINT_BENCHMARK
 #include <chrono>
