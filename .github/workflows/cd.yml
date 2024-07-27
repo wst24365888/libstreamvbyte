@@ -90,16 +90,14 @@ jobs:
       - name: Switch to Current Branch
         run: git checkout ${{ env.BRANCH }}
 
-      - name: Setup Python 3.10.4
-        uses: actions/setup-python@v3
-        with:
-          python-version: "3.10.4"
+      - uses: actions/setup-python@v5
 
       - name: Setup QEMU
         if: matrix.os == 'ubuntu-latest'
         uses: docker/setup-qemu-action@v2
 
-      - uses: pypa/cibuildwheel@v2.11.2
+      - name: Build wheels
+        run: python -m cibuildwheel --output-dir wheelhouse
         env:
           CIBW_BUILD: ${{ matrix.version }}
           CIBW_ARCHS_MACOS: x86_64 arm64
@@ -108,14 +106,10 @@ jobs:
           CIBW_BUILD_VERBOSITY_MACOS: 3
           CIBW_PRERELEASE_PYTHONS: True
 
-      - name: Verify clean directory
-        run: git diff --exit-code
-        shell: bash
-
-      - name: Upload wheels
-        uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
-          path: wheelhouse/*.whl
+          name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
+          path: ./wheelhouse/*.whl
 
   release-pypi:
     name: Release to PyPI
@@ -130,9 +124,7 @@ jobs:
       - name: Switch to Current Branch
         run: git checkout ${{ env.BRANCH }}
 
-      - uses: actions/setup-python@v4
-        with:
-          python-version: "3.10.4"
+      - uses: actions/setup-python@v5
 
       - uses: actions/download-artifact@v3
         with:
