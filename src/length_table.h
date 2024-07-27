@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <cstdint>
 
 static uint8_t length_table[256] = {
     4, // 1111
